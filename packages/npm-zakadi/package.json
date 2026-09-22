@@ -1,0 +1,51 @@
+{
+  "name": "zakadi",
+  "version": "0.0.1",
+  "description": "Zakadi face liveness: name-holding package with the shared protocol constants (zakadi.v1). The SDKs are published under @zakadi/*.",
+  "keywords": [
+    "zakadi",
+    "liveness",
+    "biometrics",
+    "identity-verification",
+    "protocol"
+  ],
+  "homepage": "https://zakadi.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mosesgameli/zakadi-protocol.git",
+    "directory": "packages/npm-zakadi"
+  },
+  "bugs": "https://github.com/mosesgameli/zakadi-protocol/issues",
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Moses Gameli",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test",
+    "prepublishOnly": "npm test"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

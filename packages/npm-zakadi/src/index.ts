@@ -1,0 +1,84 @@
+/**
+ * Shared protocol types and constants for the Zakadi face-liveness SDKs.
+ * These values mirror the Zakadi protocol specification (`zakadi.v1`) and are
+ * consumed by the web, React, Angular and React Native packages. Host apps may
+ * use them to interpret SDK events without depending on the full SDK.
+ */
+
+/** The WebSocket subprotocol every Zakadi client requests. */
+export const ZAKADI_SUBPROTOCOL = 'zakadi.v1' as const;
+
+/** Client-side session states, in lifecycle order. */
+export const SESSION_STATES = ['idle', 'consent', 'permission', 'connecting', 'active', 'ended', 'error'] as const;
+export type SessionState = (typeof SESSION_STATES)[number];
+
+/** SDK error codes. Runtime conditions only; API misuse throws a TypeError. */
+export const ERROR_CODES = [
+  'consent_declined', 'cancelled', 'permission_denied', 'unsupported_device', 'sdk_disabled',
+  'pack_unavailable', 'network_unavailable', 'auth_error', 'session_expired', 'session_used',
+  'max_duration', 'admission_rejected', 'network_floor', 'protocol_error', 'interrupted',
+  'capture_error', 'encoder_error', 'internal',
+] as const;
+export type ErrorCode = (typeof ERROR_CODES)[number];
+
+/** Narrows an unknown value to an ErrorCode; unknown values stay compatible across versions. */
+export function isErrorCode(value: unknown): value is ErrorCode {
+  return typeof value === 'string' && (ERROR_CODES as readonly string[]).includes(value);
+}
+
+/** Terminal UI states, the cue the SDK may play locally, and whether redial is offered. */
+export const TERMINAL_STATES = {
+  completed: { cue: 'done.thanks', offersRedial: false },
+  incomplete: { cue: 'fail.one_more_step', offersRedial: true },
+  disconnected: { cue: 'net.dropped', offersRedial: true },
+  network_floor: { cue: 'net.slow', offersRedial: true },
+  cancelled: { cue: 'end.cancelled', offersRedial: false },
+  error: { cue: 'end.error', offersRedial: true },
+  unsupported_device: { cue: 'end.unsupported', offersRedial: false },
+  permission_denied: { cue: 'end.permission', offersRedial: false },
+  interrupted: { cue: 'end.interrupted', offersRedial: true },
+  sdk_disabled: { cue: 'end.disabled', offersRedial: false },
+} as const satisfies Record<string, { cue: string; offersRedial: boolean }>;
+export type TerminalState = keyof typeof TERMINAL_STATES;
+
+/** Outcome carried by the server's `end` message. */
+export const END_OUTCOMES = ['completed', 'aborted'] as const;
+export type EndOutcome = (typeof END_OUTCOMES)[number];
+
+/** Reason carried by the server's `end` message. */
+export const END_REASONS = ['ok', 'floor_breached', 'max_duration', 'user_cancel', 'attempts_exhausted', 'server_error', 'admission'] as const;
+export type EndReason = (typeof END_REASONS)[number];
+
+/** Maps an `end` reason to the terminal UI state the SDK shows. */
+export function terminalStateForEnd(reason: EndReason): TerminalState {
+  switch (reason) {
+    case 'ok': return 'completed';
+    case 'attempts_exhausted':
+    case 'max_duration': return 'incomplete';
+    case 'floor_breached': return 'network_floor';
+    case 'user_cancel': return 'cancelled';
+    case 'server_error':
+    case 'admission': return 'error';
+  }
+}
+
+/** Application-level WebSocket close codes. */
+export const CloseCode = {
+  Normal: 1000,
+  TokenInvalid: 4001,
+  TokenExpired: 4002,
+  SessionNotFound: 4003,
+  SessionUsed: 4004,
+  UnsupportedCapabilities: 4005,
+  ProtocolViolation: 4006,
+  MediaFloorBreached: 4007,
+  AdmissionRejected: 4008,
+  MaxDurationExceeded: 4009,
+  CancelledByUser: 4010,
+  InternalError: 4011,
+} as const;
+export type CloseCode = (typeof CloseCode)[keyof typeof CloseCode];
+
+/** Challenge kinds the server may issue. */
+export const CHALLENGE_KINDS = ['head_turn', 'distance', 'fingers', 'digits', 'blink', 'expression', 'hand_over_face', 'look_profile'] as const;
+export type ChallengeKind = (typeof CHALLENGE_KINDS)[number];
