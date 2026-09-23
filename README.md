@@ -18,3 +18,7 @@ Run every file under `vectors/` in your test suite: decode each framing case and
 Tags `v<version>` run `.github/workflows/release.yml`: tests, then `npm stage publish` of both npm packages through the trusted publisher (no token, no 2FA in CI). A staged version is not public until a maintainer runs `npm stage approve <stage-id>` (2FA prompt); `npm stage list <package>` shows pending stage ids. Versions are permanent once approved.
 
 CI (`ci.yml`) runs the conformance unit tests, regenerates the vectors and fails on any diff, runs the checker, and runs the npm package tests.
+
+## Licence
+
+Zakadi SDKs and client libraries are open source under the Apache License 2.0 (see `LICENSE`; the `NOTICE` file reserves the Zakadi trademarks). They are clients for the Zakadi service, which is proprietary; using it requires an account and acceptance of the Zakadi Terms of Service. Zakadi and the Zakadi logo are trademarks and are not covered by the Apache licence.

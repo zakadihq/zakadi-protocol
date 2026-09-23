@@ -16,7 +16,7 @@
     "directory": "packages/npm-zakadi"
   },
   "bugs": "https://github.com/zakadihq/zakadi-protocol/issues",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "Apache-2.0",
   "author": "Moses Gameli",
   "type": "module",
   "main": "./dist/index.js",
@@ -31,7 +31,8 @@
     "dist",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "NOTICE"
   ],
   "sideEffects": false,
   "engines": {
