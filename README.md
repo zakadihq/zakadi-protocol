@@ -7,7 +7,7 @@ The Zakadi wire protocol `zakadi.v1`: the machine-readable source of truth that 
 - `schemas/v1/` - JSON Schemas (draft 2020-12) for every control message, one file per message type under `client/` and `server/`, the direction aggregates `client.schema.json` and `server.schema.json`, shared definitions in `common.schema.json`, and the schemas of the vector files themselves. Unknown message types and unknown fields are valid on the wire and must be ignored; the schemas validate known types only.
 - `vectors/` - conformance vectors: message instances (valid and invalid), binary framing cases with `.bin` files, hash-chain cases, and session transcripts for fake-server and client-simulator harnesses. See `vectors/README.md`.
 - `conformance/` - the uv-managed Python reference implementation (framing, hash chain), the generator that writes `schemas/` and `vectors/` deterministically, and the checker. See `conformance/README.md`.
-- `packages/npm/` - `@zakadi/protocol` (TypeScript constants and types); `packages/npm-zakadi/` - the unscoped `zakadi` name holder with the same content.
+- `packages/npm/` - `@zakadi/protocol`, the artefact SDKs pin: the protocol constants, a TypeScript type and a standalone validator (no runtime dependency) generated for every message type and both direction aggregates, copies of `schemas/v1/` and `vectors/`, and the Node-only `@zakadi/protocol/vectors` entry that locates and parses them; `npm test` there copies, generates, builds and tests. `packages/npm-zakadi/` - the unscoped `zakadi` name holder with the same constants.
 
 ## Using the vectors in an SDK
 
