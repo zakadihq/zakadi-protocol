@@ -15,7 +15,28 @@ Run every file under `vectors/` in your test suite: decode each framing case and
 
 ## Releases
 
-Tags `v<version>` run `.github/workflows/release.yml`: tests, then `npm stage publish` of both npm packages through the trusted publisher (no token, no 2FA in CI). A staged version is not public until a maintainer runs `npm stage approve <stage-id>` (2FA prompt); `npm stage list <package>` shows pending stage ids. Versions are permanent once approved.
+Tags `v<version>` run `.github/workflows/release.yml`, where `<version>` is the tag without its `v`:
+
+- `publish`, after `test`: `npm stage publish` of both npm packages through the trusted publisher (no token, no 2FA in CI), on tags only. A staged version is not public until a maintainer runs `npm stage approve <stage-id>` (2FA prompt); `npm stage list <package>` shows pending stage ids. Versions are permanent once approved.
+- `vectors`: regenerates the schemas and vectors and fails on any diff, runs the checker, packs the commit with `git archive`, signs the archive keyless with cosign under the workflow's GitHub OIDC identity, verifies the signature, and attaches two assets to the tag's GitHub release, creating the release when it is missing.
+
+| Asset | Contents |
+| --- | --- |
+| `zakadi-protocol-vectors-<version>.tar.gz` | `schemas/`, `vectors/`, `LICENSE` and `NOTICE` under `zakadi-protocol-vectors-<version>/`; packing the same commit twice gives byte-identical archives |
+| `zakadi-protocol-vectors-<version>.tar.gz.sigstore.json` | its Sigstore bundle: the signature, the signing certificate and the transparency-log proof |
+
+Download both from `https://github.com/zakadihq/zakadi-protocol/releases/download/v<version>/` and verify them with cosign 3:
+
+```sh
+cosign verify-blob --bundle zakadi-protocol-vectors-<version>.tar.gz.sigstore.json \
+  --certificate-identity https://github.com/zakadihq/zakadi-protocol/.github/workflows/release.yml@refs/tags/v<version> \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  zakadi-protocol-vectors-<version>.tar.gz
+```
+
+`Verified OK` means the archive is the one `release.yml` signed while running on the tag `v<version>` of this repository. A `workflow_dispatch` run from a branch packs the short commit sha as `<version>`, signs and verifies under that branch's identity (`release.yml@refs/heads/<branch>`), creates no release and stages no npm package.
+
+Pinning a tag archive by SHA-256 stays supported: the pin proves the bytes, the signature proves who produced them. `v0.1.0` predates the signed archive and has none of these assets; pin its tag archive `https://github.com/zakadihq/zakadi-protocol/archive/refs/tags/v0.1.0.tar.gz` by SHA-256 `de94fc3693659e0016d6eedb7e3b0e7fd688cc6e30247d387fb2eab4175759ba`.
 
 CI (`ci.yml`) runs the conformance unit tests, regenerates the vectors and fails on any diff, runs the checker, and runs the npm package tests.
 
