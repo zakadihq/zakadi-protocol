@@ -25,6 +25,7 @@ jobs:
         working-directory: ${{ matrix.package }}
 
   publish:
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: test
     runs-on: ubuntu-latest
     environment: npm
@@ -63,3 +64,55 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           echo "Approve with: npm stage approve <stage-id> (prompts for 2FA)" >> "$GITHUB_STEP_SUMMARY"
         working-directory: ${{ matrix.package }}
+
+  # The schemas and vectors as one archive signed keyless by this workflow (spec 00
+  # 0.11, D79). On a v* tag, <version> is the tag without its v and the archive and its
+  # Sigstore bundle go to the tag's GitHub release; a dispatch from a branch packs the
+  # short commit sha, signs and verifies under the branch's identity, and releases
+  # nothing. The job can mint an OIDC token and write releases, so it restores no uv
+  # cache and its checkout keeps no credentials: only the release step holds the token.
+  vectors:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+      - name: Vectors are deterministic and up to date
+        run: |
+          uv run --project conformance --frozen zakadi-conformance generate
+          git diff --exit-code -- schemas vectors
+      - name: Conformance check
+        run: uv run --project conformance --frozen zakadi-conformance check
+      - name: Pack schemas, vectors, LICENSE and NOTICE
+        run: |
+          version="${GITHUB_SHA::7}"
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then version="${GITHUB_REF_NAME#v}"; fi
+          archive="zakadi-protocol-vectors-${version}.tar.gz"
+          git archive --format=tar.gz --prefix="zakadi-protocol-vectors-${version}/" -o "$archive" HEAD schemas vectors LICENSE NOTICE
+          sha256sum "$archive"
+          echo "ARCHIVE=$archive" >> "$GITHUB_ENV"
+      - uses: sigstore/cosign-installer@v4.1.2
+      - name: Sign keyless under the workflow's GitHub OIDC identity
+        run: cosign sign-blob --yes --bundle "$ARCHIVE.sigstore.json" "$ARCHIVE"
+      - name: Verify under this run's identity
+        run: |
+          cosign verify-blob --bundle "$ARCHIVE.sigstore.json" \
+            --certificate-identity "https://github.com/$GITHUB_REPOSITORY/.github/workflows/release.yml@$GITHUB_REF" \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+            "$ARCHIVE"
+      - name: Attach the archive and its bundle to the tag's release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1 ||
+            gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" \
+              --notes "Signed schemas and vectors: $ARCHIVE and its Sigstore bundle $ARCHIVE.sigstore.json. README.md shows the cosign verify-blob command."
+          gh release upload "$GITHUB_REF_NAME" "$ARCHIVE" "$ARCHIVE.sigstore.json" --clobber
