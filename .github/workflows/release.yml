@@ -1,0 +1,50 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [packages/npm, packages/npm-zakadi]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm ci
+        working-directory: ${{ matrix.package }}
+      - run: npm test
+        working-directory: ${{ matrix.package }}
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      id-token: write
+      contents: read
+    strategy:
+      max-parallel: 1
+      matrix:
+        package: [packages/npm-zakadi, packages/npm]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Use an npm version that supports trusted publishing
+        run: npm install -g npm@latest && npm --version
+      - run: npm ci
+        working-directory: ${{ matrix.package }}
+      - name: Publish (trusted publishing, provenance attached automatically)
+        run: npm publish --access public
+        working-directory: ${{ matrix.package }}
