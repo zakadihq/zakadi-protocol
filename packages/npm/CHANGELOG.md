@@ -6,6 +6,15 @@ All notable changes to `@zakadi/protocol` are documented here. The format follow
 
 ## [Unreleased]
 
+### Added
+
+- The protocol revision the package is built from: a type generated from the schemas
+  for every message (`HelloMsg`, `ReadyMsg`, ...) with the `ClientMsg` and `ServerMsg`
+  unions, a standalone validator for every message type and both direction aggregates
+  (no runtime dependency), copies of `schemas/v1/` and `vectors/`, and the Node-only
+  `@zakadi/protocol/vectors` entry with `schemasDir()`, `vectorsDir()` and
+  `loadVectors()`.
+
 ### Changed
 
 - Licence: Apache License 2.0 with a NOTICE file (0.0.1 shipped with an

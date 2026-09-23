@@ -1,2 +1,6 @@
 node_modules/
 dist/
+# Build outputs: the copies scripts/sync.mjs makes and the code scripts/generate.mjs writes.
+/schemas/
+/vectors/
+/src/generated/
