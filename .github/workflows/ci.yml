@@ -1,7 +1,10 @@
 # Zakadi repository standard: ci.yml for the protocol repository. Three parts share the
 # four jobs: the conformance project (uv), and the npm packages @zakadi/protocol and
-# zakadi. The commands are the ones in lefthook.yml. The integration job regenerates
-# the schemas and vectors and runs the conformance check over them.
+# zakadi. The commands are the ones in lefthook.yml, except the scan steps that end the
+# lint job, which run in CI only (references/GITHUB.md of the standard): for each part,
+# the licence of every runtime dependency against the excluded list of spec 00 0.10,
+# then a scan of the same dependencies for known vulnerabilities. The integration job
+# regenerates the schemas and vectors and runs the conformance check over them.
 name: ci
 
 on:
@@ -56,6 +59,43 @@ jobs:
         working-directory: packages/npm
       - run: npm ci && npm run lint
         working-directory: packages/npm-zakadi
+      - name: scan
+        working-directory: conformance
+        shell: bash
+        env:
+          EXCLUDED_LICENCES: '(^|[^[:alnum:]])(A?GPL|SSPL|RSAL)|GNU (Affero )?General Public|Server Side Public|Redis Source Available|-NC([^[:alnum:]]|$)|[Nn]on[- ]?[Cc]ommercial|FoxIO'
+        run: |
+          uv run --frozen --isolated --no-dev --with pip-licenses==5.5.5 pip-licenses --format=csv | tee "$RUNNER_TEMP/licences.txt"
+          if grep -E "$EXCLUDED_LICENCES" "$RUNNER_TEMP/licences.txt"; then
+            echo "scan: a licence excluded by spec 00 0.10 is listed above" >&2
+            exit 1
+          fi
+          uv export --quiet --frozen --no-dev --no-emit-workspace --format requirements.txt --output-file "$RUNNER_TEMP/requirements.txt"
+          uvx pip-audit@2.10.1 --disable-pip --no-deps --requirement "$RUNNER_TEMP/requirements.txt"
+      - name: scan
+        working-directory: packages/npm
+        shell: bash
+        env:
+          EXCLUDED_LICENCES: '(^|[^[:alnum:]])(A?GPL|SSPL|RSAL)|GNU (Affero )?General Public|Server Side Public|Redis Source Available|-NC([^[:alnum:]]|$)|[Nn]on[- ]?[Cc]ommercial|FoxIO'
+        run: |
+          npm query .prod | jq -r '.[] | "\(.name)@\(.version) \(.license // .licenses // "unknown")"' | tee "$RUNNER_TEMP/licences.txt"
+          if grep -E "$EXCLUDED_LICENCES" "$RUNNER_TEMP/licences.txt"; then
+            echo "scan: a licence excluded by spec 00 0.10 is listed above" >&2
+            exit 1
+          fi
+          npm audit --omit=dev
+      - name: scan
+        working-directory: packages/npm-zakadi
+        shell: bash
+        env:
+          EXCLUDED_LICENCES: '(^|[^[:alnum:]])(A?GPL|SSPL|RSAL)|GNU (Affero )?General Public|Server Side Public|Redis Source Available|-NC([^[:alnum:]]|$)|[Nn]on[- ]?[Cc]ommercial|FoxIO'
+        run: |
+          npm query .prod | jq -r '.[] | "\(.name)@\(.version) \(.license // .licenses // "unknown")"' | tee "$RUNNER_TEMP/licences.txt"
+          if grep -E "$EXCLUDED_LICENCES" "$RUNNER_TEMP/licences.txt"; then
+            echo "scan: a licence excluded by spec 00 0.10 is listed above" >&2
+            exit 1
+          fi
+          npm audit --omit=dev
 
   unit:
     runs-on: ubuntu-latest
