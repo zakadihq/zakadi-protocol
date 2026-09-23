@@ -7,6 +7,9 @@ pre-commit:
   jobs:
     - name: ascii
       run: '! LC_ALL=C grep -nHI "[^[:print:][:space:]]" {staged_files}'
+    - name: secrets
+      glob: "**/.env*"
+      run: 'echo "secrets: {staged_files} must not be committed (spec 00 0.11)" >&2; exit 1'
     - name: lock
       glob: "conformance/{pyproject.toml,uv.lock}"
       run: uv lock --check --project conformance
