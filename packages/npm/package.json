@@ -1,7 +1,7 @@
 {
   "name": "@zakadi/protocol",
   "version": "0.0.1",
-  "description": "Shared protocol types and constants for the Zakadi face-liveness SDKs (zakadi.v1): session states, error codes, terminal states, close codes, challenge kinds.",
+  "description": "The Zakadi wire protocol (zakadi.v1) for the face-liveness SDKs: JSON Schemas, message types, standalone validators, conformance vectors and shared constants.",
   "keywords": [
     "zakadi",
     "liveness",
@@ -25,10 +25,16 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./vectors": {
+      "types": "./dist/vectors.d.ts",
+      "node": "./dist/vectors.js"
     }
   },
   "files": [
     "dist",
+    "schemas",
+    "vectors",
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
@@ -42,14 +48,18 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "npm run build && node --test",
+    "sync": "node scripts/sync.mjs",
+    "generate": "node scripts/generate.mjs",
+    "build": "npm run generate && tsc -p tsconfig.json",
+    "test": "npm run sync && npm run build && node --test",
     "prepublishOnly": "npm test",
     "format": "prettier --check .",
-    "lint": "eslint . && tsc --noEmit -p tsconfig.json"
+    "lint": "npm run generate && eslint . && tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@types/node": "^20.19.43",
+    "ajv": "^8.20.0",
     "eslint": "^9.39.5",
     "prettier": "^3.9.9",
     "typescript": "^5.6.0",
