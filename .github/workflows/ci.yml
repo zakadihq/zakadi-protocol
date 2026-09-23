@@ -1,3 +1,7 @@
+# Zakadi repository standard: ci.yml for the protocol repository. Three parts share the
+# four jobs: the conformance project (uv), and the npm packages @zakadi/protocol and
+# zakadi. The commands are the ones in lefthook.yml. The integration job regenerates
+# the schemas and vectors and runs the conformance check over them.
 name: ci
 
 on:
@@ -8,8 +12,12 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  conformance:
+  format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -17,26 +25,69 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: conformance/uv.lock
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: packages/*/package-lock.json
+      - run: uv run --project conformance --frozen ruff format --check conformance
+      - run: npm ci && npm run format
+        working-directory: packages/npm
+      - run: npm ci && npm run format
+        working-directory: packages/npm-zakadi
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: conformance/uv.lock
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: packages/*/package-lock.json
+      - run: uv run --project conformance --frozen ruff check conformance
+      - run: uv run --frozen ty check
+        working-directory: conformance
+      - run: npm ci && npm run lint
+        working-directory: packages/npm
+      - run: npm ci && npm run lint
+        working-directory: packages/npm-zakadi
+
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: conformance/uv.lock
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: packages/*/package-lock.json
       - name: Unit tests of the reference implementation
         run: uv run --project conformance --frozen pytest -q
+      - run: npm ci && npm test
+        working-directory: packages/npm
+      - run: npm ci && npm test
+        working-directory: packages/npm-zakadi
+
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: conformance/uv.lock
       - name: Vectors are deterministic and up to date
         run: |
           uv run --project conformance --frozen zakadi-conformance generate
           git diff --exit-code -- schemas vectors
       - name: Conformance check
         run: uv run --project conformance --frozen zakadi-conformance check
-
-  npm:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package: [packages/npm, packages/npm-zakadi]
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-      - run: npm ci
-        working-directory: ${{ matrix.package }}
-      - run: npm test
-        working-directory: ${{ matrix.package }}

@@ -14,7 +14,14 @@ dependencies = ["jsonschema>=4.23", "referencing>=0.35"]
 zakadi-conformance = "zakadi_conformance.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8.3"]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.16.8",
+    "ty>=0.0.83",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/zakadi_conformance"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

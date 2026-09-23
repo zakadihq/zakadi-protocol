@@ -65,7 +65,13 @@ def encode_header(h: Header) -> bytes:
         raise FramingError("bad_seq")
     if not 0 <= h.pts_ms <= PTS_MAX:
         raise FramingError("bad_pts")
-    b0 = (h.ver << 6) | (h.type << 4) | (int(h.keyframe) << 3) | (int(h.param_sets) << 2) | (int(h.rung_changed) << 1)
+    b0 = (
+        (h.ver << 6)
+        | (h.type << 4)
+        | (int(h.keyframe) << 3)
+        | (int(h.param_sets) << 2)
+        | (int(h.rung_changed) << 1)
+    )
     b1 = h.rung << 4
     return bytes([b0, b1]) + struct.pack("<HI", h.seq, h.pts_ms)
 
@@ -117,13 +123,15 @@ def parse_audio_batch(payload: bytes) -> list[tuple[int, bytes]]:
     while pos < len(payload):
         if len(payload) - pos < 4:
             raise FramingError("truncated_batch_record", "record header needs 4 bytes")
-        length, delta = struct.unpack("<HH", payload[pos:pos + 4])
+        length, delta = struct.unpack("<HH", payload[pos : pos + 4])
         pos += 4
         if len(payload) - pos < length:
-            raise FramingError("truncated_batch_record", "packet shorter than its declared length")
+            raise FramingError(
+                "truncated_batch_record", "packet shorter than its declared length"
+            )
         if delta < last:
             raise FramingError("batch_out_of_order", "pts_delta_ms must not decrease")
-        records.append((delta, payload[pos:pos + length]))
+        records.append((delta, payload[pos : pos + length]))
         pos += length
         last = delta
     if not records:

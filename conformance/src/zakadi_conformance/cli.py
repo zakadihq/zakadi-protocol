@@ -13,11 +13,23 @@ DEFAULT_ROOT = Path(__file__).resolve().parents[3]
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="zakadi-conformance", description="Zakadi protocol conformance tools")
-    parser.add_argument("--root", type=Path, default=DEFAULT_ROOT, help="repository root holding schemas/ and vectors/")
+    parser = argparse.ArgumentParser(
+        prog="zakadi-conformance", description="Zakadi protocol conformance tools"
+    )
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=DEFAULT_ROOT,
+        help="repository root holding schemas/ and vectors/",
+    )
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("generate", help="regenerate schemas/ and vectors/ deterministically")
-    sub.add_parser("check", help="validate schemas, message vectors, framing vectors, chain vectors and transcripts")
+    sub.add_parser(
+        "generate", help="regenerate schemas/ and vectors/ deterministically"
+    )
+    sub.add_parser(
+        "check",
+        help="validate schemas, message vectors, framing vectors, chain vectors and transcripts",
+    )
     args = parser.parse_args(argv)
     if args.command == "generate":
         generate(args.root)

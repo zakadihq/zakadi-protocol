@@ -1,7 +1,13 @@
 import hashlib
 
 from zakadi_conformance import examples
-from zakadi_conformance.chain import Chain, b64url_decode, b64url_encode, h0, jti_bytes_from_token
+from zakadi_conformance.chain import (
+    Chain,
+    b64url_decode,
+    b64url_encode,
+    h0,
+    jti_bytes_from_token,
+)
 from zakadi_conformance.framing import Header, encode_message
 
 
