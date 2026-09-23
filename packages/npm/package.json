@@ -1,6 +1,6 @@
 {
   "name": "@zakadi/protocol",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The Zakadi wire protocol (zakadi.v1) for the face-liveness SDKs: JSON Schemas, message types, standalone validators, conformance vectors and shared constants.",
   "keywords": [
     "zakadi",

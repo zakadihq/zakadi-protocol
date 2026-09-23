@@ -8,6 +8,12 @@ All notable changes to `@zakadi/protocol` are documented here. The format follow
 
 ### Added
 
+- Nothing yet.
+
+## [0.1.0] - 2026-09-23
+
+### Added
+
 - The protocol revision the package is built from: a type generated from the schemas
   for every message (`HelloMsg`, `ReadyMsg`, ...) with the `ClientMsg` and `ServerMsg`
   unions, a standalone validator for every message type and both direction aggregates
@@ -28,4 +34,5 @@ All notable changes to `@zakadi/protocol` are documented here. The format follow
   with cues and redial availability, `end` reason mapping, WebSocket close codes and
   challenge kinds from the Zakadi protocol specification.
 
-[Unreleased]: https://github.com/zakadihq/zakadi-protocol/commits/main
+[Unreleased]: https://github.com/zakadihq/zakadi-protocol/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/zakadihq/zakadi-protocol/releases/tag/v0.1.0
