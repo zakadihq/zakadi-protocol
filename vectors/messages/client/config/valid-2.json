@@ -1,0 +1,23 @@
+{
+  "t": "config",
+  "video": {
+    "codec": "avc1.42E01E",
+    "w": 480,
+    "h": 640,
+    "fps": 15,
+    "bitrate_kbps": 400,
+    "annexb": false,
+    "container": "webm",
+    "mirrored": false,
+    "rotation": 0
+  },
+  "audio": {
+    "codec": "opus",
+    "sample_rate": 48000,
+    "channels": 1,
+    "bitrate_kbps": 24,
+    "muxed_in_video": true,
+    "echo_cancellation": false
+  },
+  "rung": 2
+}

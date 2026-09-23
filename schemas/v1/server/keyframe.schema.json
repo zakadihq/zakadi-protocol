@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/keyframe.schema.json",
+  "title": "zakadi.v1 server-to-client message `keyframe`",
+  "description": "Request an IDR; boost_kbps is an absolute ceiling for boost_ms.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "keyframe"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "reason": {
+      "enum": [
+        "apex",
+        "recovery",
+        "start"
+      ]
+    },
+    "boost_kbps": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "boost_ms": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "required": [
+    "t",
+    "id",
+    "reason"
+  ]
+}

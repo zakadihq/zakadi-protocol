@@ -1,0 +1,7 @@
+{
+  "t": "feedback",
+  "code": {
+    "bad": true
+  },
+  "severity": "hint"
+}

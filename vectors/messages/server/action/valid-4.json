@@ -1,0 +1,10 @@
+{
+  "t": "action",
+  "id": "a5",
+  "kind": "blink",
+  "params": {
+    "count": 2,
+    "window_ms": 3000
+  },
+  "deadline_ms": 5000
+}

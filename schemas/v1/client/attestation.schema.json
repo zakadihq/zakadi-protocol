@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/attestation.schema.json",
+  "title": "zakadi.v1 client-to-server message `attestation`",
+  "description": "Opaque platform attestation token bound to sha256(session_id || attest_nonce).",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "attestation"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "kind": {
+      "enum": [
+        "play_integrity",
+        "app_attest"
+      ]
+    },
+    "token": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_hash": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/hex64"
+    }
+  },
+  "required": [
+    "t",
+    "kind",
+    "token",
+    "request_hash"
+  ]
+}

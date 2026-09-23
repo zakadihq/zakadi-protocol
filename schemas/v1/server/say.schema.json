@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/say.schema.json",
+  "title": "zakadi.v1 server-to-client message `say`",
+  "description": "Play a prompt-pack cue, optionally followed by digit or count clips, as one playback.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "say"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "cue": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/cueId"
+    },
+    "params": {
+      "type": "object",
+      "properties": {
+        "digits": {
+          "type": "array",
+          "items": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/digit"
+          },
+          "minItems": 1,
+          "maxItems": 8
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      }
+    },
+    "interrupt": {
+      "type": "boolean"
+    },
+    "caption": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "t",
+    "id",
+    "cue"
+  ]
+}

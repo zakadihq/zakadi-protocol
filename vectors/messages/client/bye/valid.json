@@ -1,0 +1,5 @@
+{
+  "t": "bye",
+  "reason": "user_cancel",
+  "detail": "cancel pressed on the call screen"
+}

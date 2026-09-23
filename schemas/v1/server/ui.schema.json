@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/ui.schema.json",
+  "title": "zakadi.v1 server-to-client message `ui`",
+  "description": "Full declarative UI state; idempotent, not a delta.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "ui"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "phase": {
+          "type": "string",
+          "description": "Open value set; known values: connecting, framing, action, listening, holding, done, error"
+        },
+        "self_view": {
+          "type": "object",
+          "properties": {
+            "oval": {
+              "type": "boolean"
+            },
+            "oval_emphasis": {
+              "enum": [
+                "normal",
+                "highlight"
+              ]
+            },
+            "fill": {
+              "enum": [
+                "none",
+                "dim"
+              ]
+            }
+          }
+        },
+        "arc": {
+          "type": "object",
+          "properties": {
+            "visible": {
+              "type": "boolean"
+            },
+            "direction": {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/arcDirection"
+            },
+            "progress": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "character": {
+          "type": "object",
+          "properties": {
+            "anim": {
+              "type": "string",
+              "description": "Open value set of character animations"
+            }
+          }
+        },
+        "caption": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "pictogram": {
+              "type": "string"
+            }
+          }
+        },
+        "digits": {
+          "type": "object",
+          "properties": {
+            "visible": {
+              "type": "boolean"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/digit"
+              }
+            }
+          }
+        },
+        "surround": {
+          "type": "object",
+          "properties": {
+            "brightness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "flood": {
+              "type": "boolean"
+            }
+          }
+        },
+        "badge": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "object",
+          "properties": {
+            "step": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "of": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "controls": {
+          "type": "object",
+          "properties": {
+            "repeat": {
+              "type": "boolean"
+            },
+            "more_time": {
+              "type": "boolean"
+            },
+            "cancel": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "required": [
+        "phase"
+      ]
+    }
+  },
+  "required": [
+    "t",
+    "state"
+  ]
+}

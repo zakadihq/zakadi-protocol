@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/camera_meta.schema.json",
+  "title": "zakadi.v1 client-to-server message `camera_meta`",
+  "description": "Raw camera and encoder metadata plus the constraint-probe results; device ids are salted hashes.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "camera_meta"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "source": {
+      "type": "string",
+      "description": "Platform capture API name"
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "device_id_hash": {
+            "type": "string"
+          },
+          "group_id_hash": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "object"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "encoder": {
+      "type": "object",
+      "properties": {
+        "impl": {
+          "type": "string"
+        },
+        "is_config_supported": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "probe": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "request": {
+            "type": "object"
+          },
+          "reported": {
+            "type": "object"
+          },
+          "observed": {
+            "type": "object"
+          },
+          "reconfig_ms": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "skipped": {
+            "type": "boolean"
+          },
+          "method": {
+            "enum": [
+              "getSettings",
+              "rvfc",
+              "mstp",
+              "native"
+            ]
+          }
+        },
+        "required": [
+          "request"
+        ]
+      }
+    }
+  },
+  "required": [
+    "t",
+    "source",
+    "probe"
+  ]
+}

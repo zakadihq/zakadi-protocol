@@ -1,0 +1,6 @@
+{
+  "name": "truncated-batch",
+  "description": "Batch record declares 100 bytes but carries 3.",
+  "hex": "304002006400000064000000010203",
+  "error": "truncated_batch_record"
+}

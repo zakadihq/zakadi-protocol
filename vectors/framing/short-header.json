@@ -1,0 +1,6 @@
+{
+  "name": "short-header",
+  "description": "Only five bytes.",
+  "hex": "0820010001",
+  "error": "short_header"
+}

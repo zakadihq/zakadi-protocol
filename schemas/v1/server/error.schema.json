@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/error.schema.json",
+  "title": "zakadi.v1 server-to-client message `error`",
+  "description": "Precedes a close with 4001-4006, 4008 or 4011 when the connection state allows.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "error"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "code": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/errorCode"
+    },
+    "detail": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "t",
+    "code"
+  ]
+}

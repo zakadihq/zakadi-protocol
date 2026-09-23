@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/bye.schema.json",
+  "title": "zakadi.v1 client-to-server message `bye`",
+  "description": "Client ends the session.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "bye"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "reason": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/byeReason"
+    },
+    "detail": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "t",
+    "reason"
+  ]
+}

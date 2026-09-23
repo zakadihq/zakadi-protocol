@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/ui_event.schema.json",
+  "title": "zakadi.v1 client-to-server message `ui_event`",
+  "description": "User or platform events that the server may react to.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "ui_event"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "event": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/uiEvent"
+    },
+    "detail": {
+      "type": "object"
+    },
+    "at_ms": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/atMs"
+    }
+  },
+  "required": [
+    "t",
+    "event",
+    "at_ms"
+  ]
+}

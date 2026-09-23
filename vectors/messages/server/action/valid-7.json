@@ -1,0 +1,10 @@
+{
+  "t": "action",
+  "id": "a8",
+  "kind": "look_profile",
+  "params": {
+    "direction": "user_right",
+    "min_deg": 50
+  },
+  "deadline_ms": 7000
+}

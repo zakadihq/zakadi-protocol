@@ -1,0 +1,6 @@
+{
+  "name": "empty-batch",
+  "description": "Audio batch with no records.",
+  "hex": "3040040064000000",
+  "error": "empty_batch"
+}

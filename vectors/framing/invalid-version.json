@@ -1,0 +1,6 @@
+{
+  "name": "invalid-version",
+  "description": "Framing version bits set to 1.",
+  "hex": "48200100010000000000000165121d66b9db4f62620d4bdd460107f9fed10d6b69a2d39f6c",
+  "error": "unsupported_version"
+}

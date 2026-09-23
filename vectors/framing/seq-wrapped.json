@@ -1,0 +1,18 @@
+{
+  "name": "seq-wrapped",
+  "description": "The message following seq 65535 carries seq 0 (wraparound is not a gap).",
+  "hex": "00200000a3ea00000000000161bf36eda6f7bac2c81ff655ace00d73a01d3a1dc6cf7bbba3",
+  "expect": {
+    "header": {
+      "ver": 0,
+      "type": 0,
+      "keyframe": false,
+      "param_sets": false,
+      "rung_changed": false,
+      "rung": 2,
+      "seq": 0,
+      "pts_ms": 60067
+    },
+    "payload_hex": "0000000161bf36eda6f7bac2c81ff655ace00d73a01d3a1dc6cf7bbba3"
+  }
+}

@@ -1,0 +1,322 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/action.schema.json",
+  "title": "zakadi.v1 server-to-client message `action`",
+  "description": "Issue one challenge with server-chosen parameters.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "action"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "kind": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/challengeKind"
+    },
+    "params": {
+      "type": "object"
+    },
+    "deadline_ms": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 30000
+    },
+    "keyframe": {
+      "type": "boolean"
+    },
+    "say": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    }
+  },
+  "required": [
+    "t",
+    "id",
+    "kind",
+    "params",
+    "deadline_ms"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "head_turn"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/headDirection"
+              },
+              "min_deg": {
+                "type": "integer",
+                "minimum": 15,
+                "maximum": 25
+              },
+              "hold_ms": {
+                "type": "integer",
+                "minimum": 150,
+                "maximum": 300
+              }
+            },
+            "required": [
+              "direction",
+              "min_deg",
+              "hold_ms"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "distance"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "target": {
+                "enum": [
+                  "closer",
+                  "further"
+                ]
+              },
+              "scale_ratio": {
+                "type": "number",
+                "minimum": 1.25,
+                "maximum": 1.6
+              },
+              "hold_ms": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 1000
+              }
+            },
+            "required": [
+              "target",
+              "scale_ratio",
+              "hold_ms"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "fingers"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "hand": {
+                "enum": [
+                  "left",
+                  "right",
+                  "either"
+                ]
+              },
+              "placement": {
+                "enum": [
+                  "beside_face",
+                  "crossing_face"
+                ]
+              }
+            },
+            "required": [
+              "count",
+              "hand",
+              "placement"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "digits"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "values": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/digit"
+                },
+                "minItems": 4,
+                "maxItems": 4
+              },
+              "lang": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "values",
+              "lang"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "blink"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2
+              },
+              "window_ms": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 10000
+              }
+            },
+            "required": [
+              "count",
+              "window_ms"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "expression"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "smile",
+                  "open_mouth"
+                ]
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "hand_over_face"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "hand": {
+                "enum": [
+                  "left",
+                  "right",
+                  "either"
+                ]
+              },
+              "region": {
+                "enum": [
+                  "mouth",
+                  "nose",
+                  "left_eye",
+                  "right_eye"
+                ]
+              },
+              "hold_ms": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 2000
+              }
+            },
+            "required": [
+              "hand",
+              "region",
+              "hold_ms"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "look_profile"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "params": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/headDirection"
+              },
+              "min_deg": {
+                "type": "integer",
+                "minimum": 45,
+                "maximum": 60
+              }
+            },
+            "required": [
+              "direction",
+              "min_deg"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

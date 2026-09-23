@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+          cache-dependency-glob: conformance/uv.lock
+      - name: Unit tests of the reference implementation
+        run: uv run --project conformance --frozen pytest -q
+      - name: Vectors are deterministic and up to date
+        run: |
+          uv run --project conformance --frozen zakadi-conformance generate
+          git diff --exit-code -- schemas vectors
+      - name: Conformance check
+        run: uv run --project conformance --frozen zakadi-conformance check
+
+  npm:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [packages/npm, packages/npm-zakadi]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm ci
+        working-directory: ${{ matrix.package }}
+      - run: npm test
+        working-directory: ${{ matrix.package }}

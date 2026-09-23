@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/framing-vector.schema.json",
+  "title": "A vectors/framing/*.json case",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "hex": {
+      "type": "string",
+      "pattern": "^([0-9a-f]{2})*$"
+    },
+    "expect": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "properties": {
+            "ver": {
+              "const": 0
+            },
+            "type": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "keyframe": {
+              "type": "boolean"
+            },
+            "param_sets": {
+              "type": "boolean"
+            },
+            "rung_changed": {
+              "type": "boolean"
+            },
+            "rung": {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/rung"
+            },
+            "seq": {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/seq16"
+            },
+            "pts_ms": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            }
+          },
+          "required": [
+            "ver",
+            "type",
+            "keyframe",
+            "param_sets",
+            "rung_changed",
+            "rung",
+            "seq",
+            "pts_ms"
+          ]
+        },
+        "payload_hex": {
+          "type": "string",
+          "pattern": "^([0-9a-f]{2})*$"
+        },
+        "probe_send_time_us": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "audio_batch": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "pts_delta_ms": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "packet_hex": {
+                "type": "string",
+                "pattern": "^([0-9a-f]{2})*$"
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "header",
+        "payload_hex"
+      ]
+    },
+    "error": {
+      "enum": [
+        "short_header",
+        "unsupported_version",
+        "reserved_bit_set",
+        "reserved_bits_set",
+        "short_probe",
+        "truncated_batch_record",
+        "batch_out_of_order",
+        "empty_batch"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "hex"
+  ],
+  "oneOf": [
+    {
+      "required": [
+        "expect"
+      ]
+    },
+    {
+      "required": [
+        "error"
+      ]
+    }
+  ]
+}

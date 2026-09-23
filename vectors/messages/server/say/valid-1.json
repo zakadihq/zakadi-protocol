@@ -1,0 +1,9 @@
+{
+  "t": "say",
+  "id": "s3",
+  "cue": "action.fingers.demo",
+  "params": {
+    "count": 3
+  },
+  "caption": "Show three fingers beside your face."
+}

@@ -1,0 +1,15 @@
+{
+  "t": "action",
+  "id": "a3",
+  "kind": "digits",
+  "params": {
+    "values": [
+      4,
+      7,
+      2,
+      9
+    ],
+    "lang": "en-NG"
+  },
+  "deadline_ms": 8000
+}

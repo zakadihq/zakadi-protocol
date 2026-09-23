@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/tile.schema.json",
+  "title": "zakadi.v1 server-to-client message `tile`",
+  "description": "Set the host tile nonce region to palette entry symbol within one display frame.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "tile"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "symbol": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 7
+    },
+    "min_ms": {
+      "type": "integer",
+      "minimum": 333
+    }
+  },
+  "required": [
+    "t",
+    "symbol",
+    "min_ms"
+  ]
+}

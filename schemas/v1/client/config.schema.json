@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/config.schema.json",
+  "title": "zakadi.v1 client-to-server message `config`",
+  "description": "Sent before the first media message and after every encoder reconfiguration.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "config"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "video": {
+      "type": "object",
+      "properties": {
+        "codec": {
+          "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/videoCodec"
+        },
+        "w": {
+          "type": "integer",
+          "minimum": 16
+        },
+        "h": {
+          "type": "integer",
+          "minimum": 16
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60
+        },
+        "bitrate_kbps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "annexb": {
+          "type": "boolean"
+        },
+        "container": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/container"
+            }
+          ]
+        },
+        "mirrored": {
+          "type": "boolean"
+        },
+        "rotation": {
+          "enum": [
+            0,
+            90,
+            180,
+            270
+          ]
+        },
+        "gop_ms": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "codec",
+        "w",
+        "h",
+        "fps",
+        "bitrate_kbps",
+        "annexb",
+        "mirrored",
+        "rotation"
+      ]
+    },
+    "audio": {
+      "type": "object",
+      "properties": {
+        "codec": {
+          "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/audioCodec"
+        },
+        "sample_rate": {
+          "type": "integer",
+          "minimum": 8000
+        },
+        "channels": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "bitrate_kbps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "frame_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "muxed_in_video": {
+          "type": "boolean"
+        },
+        "container": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/container"
+            }
+          ]
+        },
+        "echo_cancellation": {
+          "type": "boolean"
+        },
+        "noise_suppression": {
+          "type": "boolean"
+        },
+        "auto_gain": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "codec",
+        "sample_rate",
+        "channels",
+        "bitrate_kbps",
+        "echo_cancellation"
+      ]
+    },
+    "rung": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/rung"
+    },
+    "clock_source": {
+      "enum": [
+        "shared",
+        "aligned"
+      ],
+      "description": "Default shared; aligned when the web SDK had no common capture clock"
+    }
+  },
+  "required": [
+    "t",
+    "video",
+    "audio",
+    "rung"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/chain-vector.schema.json",
+  "title": "A vectors/chain/*.json case",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "session_id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/sessionId"
+    },
+    "jti": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/base64_16"
+    },
+    "token": {
+      "type": "string",
+      "description": "A syntactically valid but unsigned JWT carrying the jti claim"
+    },
+    "h0": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/hex64"
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hex": {
+            "type": "string",
+            "pattern": "^([0-9a-f]{2})+$"
+          },
+          "chained": {
+            "type": "boolean"
+          },
+          "chain_after": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/hex64"
+          }
+        },
+        "required": [
+          "hex",
+          "chained",
+          "chain_after"
+        ]
+      }
+    },
+    "attest": {
+      "type": "object",
+      "required": [
+        "t",
+        "video_seq",
+        "audio_seq",
+        "chain"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "session_id",
+    "jti",
+    "h0",
+    "messages",
+    "attest"
+  ]
+}

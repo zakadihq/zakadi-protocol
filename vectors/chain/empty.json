@@ -1,0 +1,15 @@
+{
+  "name": "empty",
+  "description": "No media yet: the chain equals H0.",
+  "session_id": "ses_01J8VECTOR000000000001",
+  "jti": "AAECAwQFBgcICQoLDA0ODw",
+  "token": "eyJhbGciOiJFUzI1NiIsImtpZCI6InRlc3QifQ.eyJpc3MiOiJhcGkuemFrYWRpLmRldiIsImF1ZCI6ImluZ2VzdCIsInN1YiI6InNlc18wMUo4VkVDVE9SMDAwMDAwMDAwMDAxIiwidGlkIjoidGVuYW50IiwianRpIjoiQUFFQ0F3UUZCZ2NJQ1FvTERBME9EdyIsImlhdCI6MTc1ODU0MjQwMCwibmJmIjoxNzU4NTQyNDAwLCJleHAiOjE3NTg1NDI3MDAsInBvbCI6MTIsImJhbmRfbWF4IjoiQiIsImluZyI6WyJldS13ZXN0LTIiXSwibm9uY2UiOiI4SjB3WXc2Tk1ReFJrNGIzd3ZrQWdBIiwibGFuZyI6ImVuLU5HIn0.dGVzdC1zaWduYXR1cmUtbm90LXZhbGlk",
+  "h0": "ff767c311c91cf24a24d4e96313b0eaffb8dff7253655bb014cad3b3da232b01",
+  "messages": [],
+  "attest": {
+    "t": "attest",
+    "video_seq": 0,
+    "audio_seq": 0,
+    "chain": "ff767c311c91cf24a24d4e96313b0eaffb8dff7253655bb014cad3b3da232b01"
+  }
+}

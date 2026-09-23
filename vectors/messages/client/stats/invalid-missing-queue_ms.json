@@ -1,0 +1,11 @@
+{
+  "t": "stats",
+  "queued_bytes": 48213,
+  "enc_queue": 1,
+  "encoded_kbps": 410,
+  "pre_encode_drops": 7,
+  "captured_fps": 14.8,
+  "rtt_ms": 205,
+  "battery_low": false,
+  "thermal": "nominal"
+}

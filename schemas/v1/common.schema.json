@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/common.schema.json",
+  "title": "Zakadi protocol common definitions",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "maxLength": 32,
+      "description": "Correlation id, at most 32 characters",
+      "minLength": 1
+    },
+    "ms": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Milliseconds"
+    },
+    "atMs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Milliseconds on the client's session media clock (0 before the first captured frame)"
+    },
+    "serverMs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Milliseconds on the server's monotonic clock"
+    },
+    "rung": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15,
+      "description": "Ladder rung; index 0 is the highest quality"
+    },
+    "seq16": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535,
+      "description": "Per-type sequence number, wraps at 65535"
+    },
+    "hex64": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase hex SHA-256"
+    },
+    "cueId": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(\\.[a-z0-9_]+)+$",
+      "description": "Prompt-pack cue identifier"
+    },
+    "videoCodec": {
+      "type": "string",
+      "pattern": "^(avc1\\.[0-9A-Fa-f]{6}|vp8)$",
+      "description": "H.264 codec string with profile and level, or vp8"
+    },
+    "audioCodec": {
+      "enum": [
+        "opus",
+        "aac"
+      ]
+    },
+    "container": {
+      "enum": [
+        "webm",
+        "mp4"
+      ]
+    },
+    "profile": {
+      "enum": [
+        "webcodecs",
+        "native",
+        "mediarecorder"
+      ]
+    },
+    "platform": {
+      "enum": [
+        "web",
+        "android",
+        "ios"
+      ]
+    },
+    "challengeKind": {
+      "enum": [
+        "head_turn",
+        "distance",
+        "fingers",
+        "digits",
+        "blink",
+        "expression",
+        "hand_over_face",
+        "look_profile"
+      ]
+    },
+    "headDirection": {
+      "enum": [
+        "user_left",
+        "user_right",
+        "up",
+        "down"
+      ],
+      "description": "Directions in the user's own body frame"
+    },
+    "arcDirection": {
+      "enum": [
+        "user_left",
+        "user_right",
+        "up",
+        "down",
+        "closer",
+        "further"
+      ]
+    },
+    "closeCode": {
+      "enum": [
+        1000,
+        4001,
+        4002,
+        4003,
+        4004,
+        4005,
+        4006,
+        4007,
+        4008,
+        4009,
+        4010,
+        4011
+      ],
+      "description": "WebSocket close codes used by zakadi.v1"
+    },
+    "endReason": {
+      "enum": [
+        "ok",
+        "floor_breached",
+        "max_duration",
+        "user_cancel",
+        "attempts_exhausted",
+        "server_error",
+        "admission"
+      ]
+    },
+    "byeReason": {
+      "enum": [
+        "user_cancel",
+        "app_background",
+        "permission_revoked",
+        "floor_breached",
+        "capture_error",
+        "encoder_error",
+        "unknown"
+      ]
+    },
+    "feedbackCode": {
+      "enum": [
+        "too_dark",
+        "too_bright",
+        "too_close",
+        "too_far",
+        "no_face",
+        "multiple_faces",
+        "off_center",
+        "blurry",
+        "move_slower",
+        "noisy_audio",
+        "headphones_detected"
+      ]
+    },
+    "uiEvent": {
+      "enum": [
+        "repeat_requested",
+        "more_time_requested",
+        "cancel_pressed",
+        "app_backgrounded",
+        "app_foregrounded",
+        "permission_revoked",
+        "headphones_changed"
+      ]
+    },
+    "errorCode": {
+      "enum": [
+        "protocol",
+        "unsupported_caps",
+        "token",
+        "internal",
+        "admission"
+      ]
+    },
+    "digit": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9
+    },
+    "sessionId": {
+      "type": "string",
+      "pattern": "^ses_[A-Za-z0-9]+$",
+      "description": "Session identifier"
+    },
+    "base64_16": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9+/_-]{22}(==)?$",
+      "description": "16 bytes, base64 or base64url, padding optional"
+    },
+    "ladderEntry": {
+      "type": "object",
+      "properties": {
+        "rung": {
+          "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/rung"
+        },
+        "w": {
+          "type": "integer",
+          "minimum": 16
+        },
+        "h": {
+          "type": "integer",
+          "minimum": 16
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60
+        },
+        "video_kbps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "audio_kbps": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "rung",
+        "w",
+        "h",
+        "fps",
+        "video_kbps",
+        "audio_kbps"
+      ]
+    }
+  }
+}

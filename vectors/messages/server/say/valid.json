@@ -1,0 +1,14 @@
+{
+  "t": "say",
+  "id": "s17",
+  "cue": "digits.say",
+  "params": {
+    "digits": [
+      4,
+      7,
+      2
+    ]
+  },
+  "interrupt": false,
+  "caption": "Say these numbers out loud: four, seven, two."
+}

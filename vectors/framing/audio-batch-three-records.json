@@ -1,0 +1,32 @@
+{
+  "name": "audio-batch-three-records",
+  "description": "Three Opus packets batched at rung 4; the batch consumes one audio seq value.",
+  "hex": "30400002f82000003a000000df097885d16cb8733c681dacfd15e95946d944626f3deaa9808d92097f3122117ace9480531ca6804e8644a35c83b69e25b789c8d7c83f50b1013c001400a6abf68c7249ed513784f5df5e146bced8200943b6b0e04187d615b5759c5b3f1eac34c233c2e7aad3d24000a5f80a2fb7244d941a8148c739aa2dab390028006c4e74921325222e31a1cd13be12ed426966ce24fc23d7da8d2097616a06956ec28ad403136828d4571e3c5dee6e5ec04a91115f5d3b513ec2",
+  "expect": {
+    "header": {
+      "ver": 0,
+      "type": 3,
+      "keyframe": false,
+      "param_sets": false,
+      "rung_changed": false,
+      "rung": 4,
+      "seq": 512,
+      "pts_ms": 8440
+    },
+    "payload_hex": "3a000000df097885d16cb8733c681dacfd15e95946d944626f3deaa9808d92097f3122117ace9480531ca6804e8644a35c83b69e25b789c8d7c83f50b1013c001400a6abf68c7249ed513784f5df5e146bced8200943b6b0e04187d615b5759c5b3f1eac34c233c2e7aad3d24000a5f80a2fb7244d941a8148c739aa2dab390028006c4e74921325222e31a1cd13be12ed426966ce24fc23d7da8d2097616a06956ec28ad403136828d4571e3c5dee6e5ec04a91115f5d3b513ec2",
+    "audio_batch": [
+      {
+        "pts_delta_ms": 0,
+        "packet_hex": "df097885d16cb8733c681dacfd15e95946d944626f3deaa9808d92097f3122117ace9480531ca6804e8644a35c83b69e25b789c8d7c83f50b101"
+      },
+      {
+        "pts_delta_ms": 20,
+        "packet_hex": "a6abf68c7249ed513784f5df5e146bced8200943b6b0e04187d615b5759c5b3f1eac34c233c2e7aad3d24000a5f80a2fb7244d941a8148c739aa2dab"
+      },
+      {
+        "pts_delta_ms": 40,
+        "packet_hex": "6c4e74921325222e31a1cd13be12ed426966ce24fc23d7da8d2097616a06956ec28ad403136828d4571e3c5dee6e5ec04a91115f5d3b513ec2"
+      }
+    ]
+  }
+}

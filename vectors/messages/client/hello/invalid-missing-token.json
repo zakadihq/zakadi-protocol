@@ -1,0 +1,51 @@
+{
+  "t": "hello",
+  "v": 1,
+  "sdk": {
+    "platform": "web",
+    "name": "@zakadi/web-core",
+    "version": "1.4.2",
+    "os": "Android 13",
+    "device": "TECNO KI5q",
+    "browser": "Chrome 128",
+    "wrapper": {
+      "name": "@zakadi/react",
+      "version": "1.0.3"
+    }
+  },
+  "caps": {
+    "profile": "webcodecs",
+    "video": [
+      "avc1.42E01F",
+      "vp8"
+    ],
+    "audio": [
+      "opus",
+      "aac"
+    ],
+    "hw_encode": true,
+    "keyframe_on_demand": true,
+    "bitrate_reconfig": true,
+    "max_resolution": {
+      "w": 720,
+      "h": 1280
+    },
+    "max_fps": 30,
+    "attestation": "none"
+  },
+  "prompt_pack": {
+    "lang": "en-NG",
+    "version": "2026.09.1"
+  },
+  "a11y": {
+    "screen_reader": false,
+    "captions": true,
+    "reduced_motion": false,
+    "extended_time": false
+  },
+  "consent": {
+    "biometric": true,
+    "recording": true,
+    "at_ms_wall": 1758542400000
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "t": "action",
+  "id": "a6",
+  "kind": "expression",
+  "params": {
+    "kind": "smile"
+  },
+  "deadline_ms": 5000
+}

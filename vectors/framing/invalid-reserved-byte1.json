@@ -1,0 +1,6 @@
+{
+  "name": "invalid-reserved-byte1",
+  "description": "Byte 1 low nibble set.",
+  "hex": "08250100010000000000000165121d66b9db4f62620d4bdd460107f9fed10d6b69a2d39f6c",
+  "error": "reserved_bits_set"
+}

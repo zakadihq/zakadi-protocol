@@ -1,0 +1,22 @@
+{
+  "t": "ready",
+  "session_id": "ses_01J8VECTOR000000000001",
+  "server_ms": 0,
+  "ladder": [],
+  "start_rung": 2,
+  "probe": {
+    "count": 8,
+    "bytes": 8192,
+    "window_ms": 1500
+  },
+  "gop_ms": 2000,
+  "stats_interval_ms": 500,
+  "attest_interval_ms": 1000,
+  "attest_nonce": "8J0wYw6NMQxRk4b3wvkAgA",
+  "max_media_ms": 60000,
+  "ping_interval_ms": 10000,
+  "features": {
+    "nonce_tile": true,
+    "keyframe_requests": true
+  }
+}

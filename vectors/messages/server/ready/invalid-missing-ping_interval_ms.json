@@ -1,0 +1,62 @@
+{
+  "t": "ready",
+  "session_id": "ses_01J8VECTOR000000000001",
+  "server_ms": 0,
+  "ladder": [
+    {
+      "rung": 0,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 900,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 1,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 600,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 2,
+      "w": 480,
+      "h": 640,
+      "fps": 15,
+      "video_kbps": 400,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 3,
+      "w": 336,
+      "h": 448,
+      "fps": 12,
+      "video_kbps": 250,
+      "audio_kbps": 16
+    },
+    {
+      "rung": 4,
+      "w": 288,
+      "h": 384,
+      "fps": 10,
+      "video_kbps": 150,
+      "audio_kbps": 12
+    }
+  ],
+  "start_rung": 2,
+  "probe": {
+    "count": 8,
+    "bytes": 8192,
+    "window_ms": 1500
+  },
+  "gop_ms": 2000,
+  "stats_interval_ms": 500,
+  "attest_interval_ms": 1000,
+  "attest_nonce": "8J0wYw6NMQxRk4b3wvkAgA",
+  "max_media_ms": 60000,
+  "features": {
+    "nonce_tile": true,
+    "keyframe_requests": true
+  }
+}

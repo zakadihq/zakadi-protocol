@@ -1,0 +1,11 @@
+{
+  "t": "action",
+  "id": "a2",
+  "kind": "fingers",
+  "params": {
+    "count": 6,
+    "hand": "left",
+    "placement": "beside_face"
+  },
+  "deadline_ms": 7000
+}

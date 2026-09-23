@@ -1,0 +1,41 @@
+{
+  "t": "bogus_ui",
+  "state": {
+    "phase": "action",
+    "self_view": {
+      "oval": true,
+      "oval_emphasis": "normal",
+      "fill": "none"
+    },
+    "arc": {
+      "visible": true,
+      "direction": "user_left",
+      "progress": 0.0
+    },
+    "character": {
+      "anim": "demo_head_turn_left"
+    },
+    "caption": {
+      "text": "Turn your head slowly, like this.",
+      "pictogram": "head_turn_left"
+    },
+    "digits": {
+      "visible": false,
+      "values": []
+    },
+    "surround": {
+      "brightness": 0.9,
+      "flood": false
+    },
+    "badge": "automated",
+    "progress": {
+      "step": 1,
+      "of": 2
+    },
+    "controls": {
+      "repeat": true,
+      "more_time": true,
+      "cancel": true
+    }
+  }
+}

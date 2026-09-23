@@ -1,0 +1,18 @@
+{
+  "name": "video-idr-with-params",
+  "description": "Video IDR at rung 2 with SPS and PPS preceding the slice (Annex-B start codes).",
+  "hex": "0c201204e42000000000000167c67e816b4bfbe2fb54f6bddf7c1ce18701bf31de56720f4700000001688c21ff72edd718d94e139513dc1b63fc9306f6bf9ce506e06db00a059ff27587000000016553c37d788eb44db7482f6d463d19e570244cbba0e358fc7874fa8cb1955cafb5321253fe93d1232c",
+  "expect": {
+    "header": {
+      "ver": 0,
+      "type": 0,
+      "keyframe": true,
+      "param_sets": true,
+      "rung_changed": false,
+      "rung": 2,
+      "seq": 1042,
+      "pts_ms": 8420
+    },
+    "payload_hex": "0000000167c67e816b4bfbe2fb54f6bddf7c1ce18701bf31de56720f4700000001688c21ff72edd718d94e139513dc1b63fc9306f6bf9ce506e06db00a059ff27587000000016553c37d788eb44db7482f6d463d19e570244cbba0e358fc7874fa8cb1955cafb5321253fe93d1232c"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "t": "action",
+  "id": "a7",
+  "kind": "hand_over_face",
+  "params": {
+    "hand": "right",
+    "region": "mouth",
+    "hold_ms": 500
+  },
+  "deadline_ms": 7000
+}

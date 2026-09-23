@@ -1,0 +1,12 @@
+{
+  "t": "action",
+  "id": "a2",
+  "kind": "fingers",
+  "params": {
+    "count": 3,
+    "hand": "either",
+    "placement": "beside_face"
+  },
+  "deadline_ms": 7000,
+  "keyframe": true
+}

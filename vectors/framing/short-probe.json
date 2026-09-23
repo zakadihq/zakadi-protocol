@@ -1,0 +1,6 @@
+{
+  "name": "short-probe",
+  "description": "Probe payload shorter than the 8-byte send time.",
+  "hex": "200001000000000001020304",
+  "error": "short_probe"
+}

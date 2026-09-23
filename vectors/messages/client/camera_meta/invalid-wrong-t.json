@@ -1,0 +1,222 @@
+{
+  "t": "bogus_camera_meta",
+  "source": "getUserMedia",
+  "devices": [
+    {
+      "kind": "videoinput",
+      "label": "camera2 1, facing front",
+      "device_id_hash": "5f1b2c9e0d4a7b6c8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d",
+      "group_id_hash": "0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d"
+    }
+  ],
+  "capabilities": {
+    "width": {
+      "min": 1,
+      "max": 1280
+    },
+    "height": {
+      "min": 1,
+      "max": 720
+    },
+    "frameRate": {
+      "min": 1,
+      "max": 30
+    }
+  },
+  "settings": {
+    "width": 640,
+    "height": 480,
+    "frameRate": 30,
+    "facingMode": "user"
+  },
+  "encoder": {
+    "impl": "hardware",
+    "is_config_supported": {
+      "avc1.42E01F": true,
+      "vp8": true
+    }
+  },
+  "probe": [
+    {
+      "request": {
+        "height": 3001
+      },
+      "reported": {
+        "w": 1280,
+        "h": 720
+      },
+      "observed": {
+        "w": 1280,
+        "h": 720,
+        "fps": 29.6
+      },
+      "reconfig_ms": 143,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "height": 11
+      },
+      "reported": {
+        "w": 160,
+        "h": 120
+      },
+      "observed": {
+        "w": 160,
+        "h": 120,
+        "fps": 30.1
+      },
+      "reconfig_ms": 121,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "height": 640
+      },
+      "reported": {
+        "w": 480,
+        "h": 640
+      },
+      "observed": {
+        "w": 480,
+        "h": 640,
+        "fps": 29.8
+      },
+      "reconfig_ms": 98,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "height": 240
+      },
+      "reported": {
+        "w": 320,
+        "h": 240
+      },
+      "observed": {
+        "w": 320,
+        "h": 240,
+        "fps": 30.0
+      },
+      "reconfig_ms": 95,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "height": 2001
+      },
+      "reported": {
+        "w": 1280,
+        "h": 720
+      },
+      "observed": {
+        "w": 1280,
+        "h": 720,
+        "fps": 29.9
+      },
+      "reconfig_ms": 140,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "height": 22
+      },
+      "reported": {
+        "w": 160,
+        "h": 120
+      },
+      "observed": {
+        "w": 160,
+        "h": 120,
+        "fps": 30.0
+      },
+      "reconfig_ms": 118,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "height": 1001
+      },
+      "reported": {
+        "w": 1280,
+        "h": 720
+      },
+      "observed": {
+        "w": 1280,
+        "h": 720,
+        "fps": 29.7
+      },
+      "reconfig_ms": 139,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "fps": 200
+      },
+      "reported": {
+        "w": 640,
+        "h": 480,
+        "fps": 30
+      },
+      "observed": {
+        "w": 640,
+        "h": 480,
+        "fps": 30.0
+      },
+      "reconfig_ms": 88,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "fps": 1
+      },
+      "reported": {
+        "w": 640,
+        "h": 480,
+        "fps": 1
+      },
+      "observed": {
+        "w": 640,
+        "h": 480,
+        "fps": 1.0
+      },
+      "reconfig_ms": 402,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "fps": 60
+      },
+      "reported": {
+        "w": 640,
+        "h": 480,
+        "fps": 30
+      },
+      "observed": {
+        "w": 640,
+        "h": 480,
+        "fps": 29.9
+      },
+      "reconfig_ms": 90,
+      "method": "rvfc"
+    },
+    {
+      "request": {
+        "fps": 120
+      },
+      "skipped": true
+    },
+    {
+      "request": {
+        "fps": 5
+      },
+      "skipped": true
+    },
+    {
+      "request": {
+        "fps": 30
+      },
+      "skipped": true
+    }
+  ]
+}

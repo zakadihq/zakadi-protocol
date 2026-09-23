@@ -1,0 +1,18 @@
+{
+  "name": "video-rung-changed",
+  "description": "First video message after a rung change to rung 3; a rung JSON message must accompany it.",
+  "hex": "0e3014046a210000000000016753c37d788eb44db7482f6d463d19e570244cbba0e358fc7800000001681966fb7f2f908295424b45799d1767e5b593808129caf3107a430f5d8ac7e8e30000000165df097885d16cb8733c681dacfd15e95946d944626f3deaa9808d92097f3122117ace9480531ca680",
+  "expect": {
+    "header": {
+      "ver": 0,
+      "type": 0,
+      "keyframe": true,
+      "param_sets": true,
+      "rung_changed": true,
+      "rung": 3,
+      "seq": 1044,
+      "pts_ms": 8554
+    },
+    "payload_hex": "000000016753c37d788eb44db7482f6d463d19e570244cbba0e358fc7800000001681966fb7f2f908295424b45799d1767e5b593808129caf3107a430f5d8ac7e8e30000000165df097885d16cb8733c681dacfd15e95946d944626f3deaa9808d92097f3122117ace9480531ca680"
+  }
+}

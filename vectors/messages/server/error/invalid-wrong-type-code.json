@@ -1,0 +1,7 @@
+{
+  "t": "error",
+  "code": {
+    "bad": true
+  },
+  "detail": "retry_after=5"
+}

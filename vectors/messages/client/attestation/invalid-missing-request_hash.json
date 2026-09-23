@@ -1,0 +1,5 @@
+{
+  "t": "attestation",
+  "kind": "play_integrity",
+  "token": "eyJhbGciOiJSU0EtT0FFUC0yNTYiLCJlbmMiOiJBMjU2R0NNIn0.opaque"
+}

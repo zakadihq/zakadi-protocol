@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/end.schema.json",
+  "title": "zakadi.v1 server-to-client message `end`",
+  "description": "Last message before the socket closes with 1000, 4007, 4009 or 4010.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "end"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "outcome": {
+      "enum": [
+        "completed",
+        "aborted"
+      ]
+    },
+    "reason": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/endReason"
+    },
+    "retry": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "t",
+    "outcome",
+    "reason",
+    "retry"
+  ]
+}

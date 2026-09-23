@@ -1,0 +1,6 @@
+{
+  "name": "invalid-reserved-bit0",
+  "description": "Byte 0 bit 0 set.",
+  "hex": "09200100010000000000000165121d66b9db4f62620d4bdd460107f9fed10d6b69a2d39f6c",
+  "error": "reserved_bit_set"
+}

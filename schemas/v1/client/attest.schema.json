@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/attest.schema.json",
+  "title": "zakadi.v1 client-to-server message `attest`",
+  "description": "Rolling hash chain over media messages of types 0, 1 and 3.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "attest"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "video_seq": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/seq16"
+    },
+    "audio_seq": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/seq16"
+    },
+    "chain": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/hex64"
+    }
+  },
+  "required": [
+    "t",
+    "video_seq",
+    "audio_seq",
+    "chain"
+  ]
+}

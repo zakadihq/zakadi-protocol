@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "zakadi-conformance"
+version = "0.1.0"
+description = "Reference implementation and conformance checker for the Zakadi wire protocol (zakadi.v1): schema generation, binary framing, hash chain, test vectors, transcript validation."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["jsonschema>=4.23", "referencing>=0.35"]
+
+[project.scripts]
+zakadi-conformance = "zakadi_conformance.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/zakadi_conformance"]

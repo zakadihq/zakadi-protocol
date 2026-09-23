@@ -1,0 +1,8 @@
+{
+  "t": "probe_result",
+  "goodput_kbps": {
+    "bad": true
+  },
+  "rtt_ms": 190,
+  "start_rung": 2
+}

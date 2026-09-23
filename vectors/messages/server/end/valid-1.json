@@ -1,0 +1,6 @@
+{
+  "t": "end",
+  "outcome": "aborted",
+  "reason": "floor_breached",
+  "retry": true
+}

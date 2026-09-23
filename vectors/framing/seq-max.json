@@ -1,0 +1,18 @@
+{
+  "name": "seq-max",
+  "description": "seq at its maximum value; the next message of this type carries seq 0.",
+  "hex": "0020ffff60ea00000000000161f8936f9f56de8dea25d97d797f0ef12b8bf358e58908c40a",
+  "expect": {
+    "header": {
+      "ver": 0,
+      "type": 0,
+      "keyframe": false,
+      "param_sets": false,
+      "rung_changed": false,
+      "rung": 2,
+      "seq": 65535,
+      "pts_ms": 60000
+    },
+    "payload_hex": "0000000161f8936f9f56de8dea25d97d797f0ef12b8bf358e58908c40a"
+  }
+}

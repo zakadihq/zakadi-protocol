@@ -1,0 +1,32 @@
+{
+  "t": "hello",
+  "v": 1,
+  "token": "eyJhbGciOiJFUzI1NiIsImtpZCI6InRlc3QifQ.eyJpc3MiOiJhcGkuemFrYWRpLmRldiIsImF1ZCI6ImluZ2VzdCIsInN1YiI6InNlc18wMUo4VkVDVE9SMDAwMDAwMDAwMDAxIiwidGlkIjoidGVuYW50IiwianRpIjoiQUFFQ0F3UUZCZ2NJQ1FvTERBME9EdyIsImlhdCI6MTc1ODU0MjQwMCwibmJmIjoxNzU4NTQyNDAwLCJleHAiOjE3NTg1NDI3MDAsInBvbCI6MTIsImJhbmRfbWF4IjoiQiIsImluZyI6WyJldS13ZXN0LTIiXSwibm9uY2UiOiI4SjB3WXc2Tk1ReFJrNGIzd3ZrQWdBIiwibGFuZyI6ImVuLU5HIn0.dGVzdC1zaWduYXR1cmUtbm90LXZhbGlk",
+  "sdk": {
+    "platform": "web",
+    "name": "@zakadi/web-core",
+    "version": "1.4.2",
+    "os": "Android 13",
+    "device": "TECNO KI5q",
+    "browser": "Chrome 128",
+    "wrapper": {
+      "name": "@zakadi/react",
+      "version": "1.0.3"
+    }
+  },
+  "prompt_pack": {
+    "lang": "en-NG",
+    "version": "2026.09.1"
+  },
+  "a11y": {
+    "screen_reader": false,
+    "captions": true,
+    "reduced_motion": false,
+    "extended_time": false
+  },
+  "consent": {
+    "biometric": true,
+    "recording": true,
+    "at_ms_wall": 1758542400000
+  }
+}

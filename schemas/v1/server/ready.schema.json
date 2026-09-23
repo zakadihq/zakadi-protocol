@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/ready.schema.json",
+  "title": "zakadi.v1 server-to-client message `ready`",
+  "description": "Session parameters, sent once after a valid hello.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "ready"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "session_id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/sessionId"
+    },
+    "server_ms": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/serverMs"
+    },
+    "ladder": {
+      "type": "array",
+      "items": {
+        "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ladderEntry"
+      },
+      "minItems": 1
+    },
+    "start_rung": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/rung"
+    },
+    "probe": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 64
+        },
+        "window_ms": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "count",
+        "bytes",
+        "window_ms"
+      ]
+    },
+    "gop_ms": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "stats_interval_ms": {
+      "type": "integer",
+      "minimum": 100
+    },
+    "attest_interval_ms": {
+      "type": "integer",
+      "minimum": 100
+    },
+    "attest_nonce": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/base64_16"
+    },
+    "max_media_ms": {
+      "type": "integer",
+      "minimum": 1000
+    },
+    "ping_interval_ms": {
+      "type": "integer",
+      "minimum": 1000
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    }
+  },
+  "required": [
+    "t",
+    "session_id",
+    "server_ms",
+    "ladder",
+    "start_rung",
+    "probe",
+    "gop_ms",
+    "stats_interval_ms",
+    "attest_interval_ms",
+    "attest_nonce",
+    "max_media_ms",
+    "ping_interval_ms"
+  ]
+}

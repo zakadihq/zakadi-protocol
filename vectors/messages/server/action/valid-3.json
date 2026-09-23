@@ -1,0 +1,12 @@
+{
+  "t": "action",
+  "id": "a4",
+  "kind": "distance",
+  "params": {
+    "target": "closer",
+    "scale_ratio": 1.4,
+    "hold_ms": 300
+  },
+  "deadline_ms": 7000,
+  "keyframe": true
+}

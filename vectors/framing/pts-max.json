@@ -1,0 +1,18 @@
+{
+  "name": "pts-max",
+  "description": "pts_ms at its maximum uint32 value.",
+  "hex": "10100700ffffffff85d86bac9896f7a619122ddf400bf515ae80e1a715eeb13ba746a21240b07b265202550994ff2d7c",
+  "expect": {
+    "header": {
+      "ver": 0,
+      "type": 1,
+      "keyframe": false,
+      "param_sets": false,
+      "rung_changed": false,
+      "rung": 1,
+      "seq": 7,
+      "pts_ms": 4294967295
+    },
+    "payload_hex": "85d86bac9896f7a619122ddf400bf515ae80e1a715eeb13ba746a21240b07b265202550994ff2d7c"
+  }
+}

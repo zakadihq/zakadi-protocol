@@ -1,0 +1,5 @@
+{
+  "t": "bogus_error",
+  "code": "admission",
+  "detail": "retry_after=5"
+}

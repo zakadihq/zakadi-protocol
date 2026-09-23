@@ -1,0 +1,6 @@
+{
+  "t": "bogus_ui_event",
+  "event": "more_time_requested",
+  "detail": {},
+  "at_ms": 12040
+}

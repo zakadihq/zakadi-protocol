@@ -1,0 +1,8 @@
+{
+  "t": "action",
+  "id": "a1",
+  "kind": "head_turn",
+  "deadline_ms": 7000,
+  "keyframe": true,
+  "say": "s17"
+}

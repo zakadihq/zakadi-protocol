@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/transcript-line.schema.json",
+  "title": "One line of a sessions/*.jsonl transcript",
+  "description": "The first line is a meta line; every other line carries exactly one of msg, media or close.",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "protocol": {
+              "const": "zakadi.v1"
+            },
+            "session_id": {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/sessionId"
+            },
+            "jti": {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/base64_16"
+            },
+            "description": {
+              "type": "string"
+            },
+            "expect": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "name",
+            "protocol",
+            "session_id",
+            "jti"
+          ]
+        }
+      },
+      "required": [
+        "meta"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "t_ms": {
+          "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+        },
+        "dir": {
+          "enum": [
+            "c2s",
+            "s2c"
+          ]
+        },
+        "msg": {
+          "type": "object",
+          "required": [
+            "t"
+          ]
+        }
+      },
+      "required": [
+        "t_ms",
+        "dir",
+        "msg"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "t_ms": {
+          "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+        },
+        "dir": {
+          "const": "c2s"
+        },
+        "media": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "seq": {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/seq16"
+            },
+            "pts_ms": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "rung": {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/rung"
+            },
+            "keyframe": {
+              "type": "boolean"
+            },
+            "param_sets": {
+              "type": "boolean"
+            },
+            "rung_changed": {
+              "type": "boolean"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 8
+            }
+          },
+          "required": [
+            "type",
+            "seq",
+            "pts_ms",
+            "rung",
+            "bytes"
+          ]
+        }
+      },
+      "required": [
+        "t_ms",
+        "dir",
+        "media"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "t_ms": {
+          "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+        },
+        "dir": {
+          "const": "s2c"
+        },
+        "close": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/closeCode"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "code"
+          ]
+        }
+      },
+      "required": [
+        "t_ms",
+        "dir",
+        "close"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

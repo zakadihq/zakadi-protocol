@@ -1,0 +1,7 @@
+{
+  "t": "pong",
+  "re": {
+    "bad": true
+  },
+  "server_ms": 9600
+}

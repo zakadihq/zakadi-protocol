@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/ping.schema.json",
+  "title": "zakadi.v1 server-to-client message `ping`",
+  "description": "Keepalive carrying the server-measured RTT and media receive rate.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "ping"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "server_ms": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/serverMs"
+    },
+    "rtt_ms": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ]
+    },
+    "rx_kbps": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "number",
+          "minimum": 0
+        }
+      ]
+    }
+  },
+  "required": [
+    "t",
+    "id",
+    "server_ms"
+  ]
+}

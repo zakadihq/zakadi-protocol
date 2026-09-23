@@ -1,0 +1,19 @@
+{
+  "name": "probe",
+  "description": "Probe message: uint64 little-endian send time in microseconds, then filler; probes have their own seq space.",
+  "hex": "2000000000000000425112000000000032f0f299b401570c2bbda5461f106fb7faad93054295cd7294691a0d5f71ce9c66687444f40d69fedc6b37ba37e3b350",
+  "expect": {
+    "header": {
+      "ver": 0,
+      "type": 2,
+      "keyframe": false,
+      "param_sets": false,
+      "rung_changed": false,
+      "rung": 0,
+      "seq": 0,
+      "pts_ms": 0
+    },
+    "payload_hex": "425112000000000032f0f299b401570c2bbda5461f106fb7faad93054295cd7294691a0d5f71ce9c66687444f40d69fedc6b37ba37e3b350",
+    "probe_send_time_us": 1200450
+  }
+}

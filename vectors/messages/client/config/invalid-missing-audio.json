@@ -1,0 +1,17 @@
+{
+  "t": "config",
+  "video": {
+    "codec": "avc1.42E01F",
+    "w": 480,
+    "h": 640,
+    "fps": 15,
+    "bitrate_kbps": 400,
+    "annexb": true,
+    "container": null,
+    "mirrored": false,
+    "rotation": 0,
+    "gop_ms": 2000
+  },
+  "rung": 2,
+  "clock_source": "shared"
+}

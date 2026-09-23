@@ -1,0 +1,7 @@
+{
+  "t": "tile",
+  "symbol": {
+    "bad": true
+  },
+  "min_ms": 400
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client.schema.json",
+  "title": "Any zakadi.v1 client-to-server message",
+  "description": "Discriminated by t. Unknown message types are valid on the wire and must be ignored; this aggregate only validates known types.",
+  "oneOf": [
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/hello.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/config.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/probe_done.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/rung.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/stats.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/camera_meta.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/attestation.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/audio_state.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/attest.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/ui_event.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/pong.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/ping.schema.json"
+    },
+    {
+      "$ref": "https://zakadi.dev/schemas/v1/client/bye.schema.json"
+    }
+  ]
+}

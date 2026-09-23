@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/probe_result.schema.json",
+  "title": "zakadi.v1 server-to-client message `probe_result`",
+  "description": "Result of the uplink probe.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "probe_result"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "goodput_kbps": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rtt_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "start_rung": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/rung"
+    }
+  },
+  "required": [
+    "t",
+    "goodput_kbps",
+    "rtt_ms",
+    "start_rung"
+  ]
+}

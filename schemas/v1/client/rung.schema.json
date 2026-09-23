@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/rung.schema.json",
+  "title": "zakadi.v1 client-to-server message `rung`",
+  "description": "Announces a rung change and the sequence numbers it applies from.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "rung"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "rung": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/rung"
+    },
+    "reason": {
+      "enum": [
+        "backpressure",
+        "headroom",
+        "server",
+        "keyframe_guard"
+      ]
+    },
+    "from_video_seq": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/seq16"
+    },
+    "from_audio_seq": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/seq16"
+    }
+  },
+  "required": [
+    "t",
+    "rung",
+    "reason",
+    "from_video_seq",
+    "from_audio_seq"
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/hello.schema.json",
+  "title": "zakadi.v1 client-to-server message `hello`",
+  "description": "First message on the socket. Both consent flags must be true; the server closes with 4006 otherwise.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "hello"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "v": {
+      "const": 1
+    },
+    "token": {
+      "type": "string",
+      "description": "The client_token from POST /v1/sessions, sent once and never in the URL",
+      "minLength": 1
+    },
+    "sdk": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/platform"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "os": {
+          "type": "string"
+        },
+        "device": {
+          "type": "string"
+        },
+        "browser": {
+          "type": "string",
+          "description": "Present only on web"
+        },
+        "wrapper": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "version"
+          ]
+        }
+      },
+      "required": [
+        "platform",
+        "name",
+        "version"
+      ]
+    },
+    "caps": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/profile"
+        },
+        "video": {
+          "type": "array",
+          "items": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/videoCodec"
+          },
+          "minItems": 1
+        },
+        "audio": {
+          "type": "array",
+          "items": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/audioCodec"
+          }
+        },
+        "hw_encode": {
+          "type": "boolean"
+        },
+        "keyframe_on_demand": {
+          "type": "boolean"
+        },
+        "bitrate_reconfig": {
+          "type": "boolean"
+        },
+        "max_resolution": {
+          "type": "object",
+          "properties": {
+            "w": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "h": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "w",
+            "h"
+          ]
+        },
+        "max_fps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attestation": {
+          "enum": [
+            "play_integrity",
+            "app_attest",
+            "webauthn",
+            "none"
+          ]
+        }
+      },
+      "required": [
+        "profile",
+        "video",
+        "audio",
+        "keyframe_on_demand",
+        "bitrate_reconfig"
+      ]
+    },
+    "prompt_pack": {
+      "type": "object",
+      "properties": {
+        "lang": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "lang",
+        "version"
+      ]
+    },
+    "a11y": {
+      "type": "object",
+      "properties": {
+        "screen_reader": {
+          "type": "boolean"
+        },
+        "captions": {
+          "type": "boolean"
+        },
+        "reduced_motion": {
+          "type": "boolean"
+        },
+        "extended_time": {
+          "type": "boolean"
+        }
+      }
+    },
+    "consent": {
+      "type": "object",
+      "properties": {
+        "biometric": {
+          "const": true
+        },
+        "recording": {
+          "const": true
+        },
+        "at_ms_wall": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "biometric",
+        "recording",
+        "at_ms_wall"
+      ]
+    }
+  },
+  "required": [
+    "t",
+    "v",
+    "token",
+    "sdk",
+    "caps",
+    "prompt_pack",
+    "consent"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "t": "config",
+  "video": 12345,
+  "audio": {
+    "codec": "opus",
+    "sample_rate": 16000,
+    "channels": 1,
+    "bitrate_kbps": 24,
+    "frame_ms": 20,
+    "muxed_in_video": false,
+    "echo_cancellation": false,
+    "noise_suppression": false,
+    "auto_gain": false
+  },
+  "rung": 2,
+  "clock_source": "shared"
+}

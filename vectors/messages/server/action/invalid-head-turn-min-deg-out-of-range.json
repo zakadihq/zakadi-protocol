@@ -1,0 +1,13 @@
+{
+  "t": "action",
+  "id": "a1",
+  "kind": "head_turn",
+  "params": {
+    "direction": "user_left",
+    "min_deg": 40,
+    "hold_ms": 250
+  },
+  "deadline_ms": 7000,
+  "keyframe": true,
+  "say": "s17"
+}

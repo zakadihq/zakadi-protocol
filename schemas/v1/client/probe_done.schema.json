@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/probe_done.schema.json",
+  "title": "zakadi.v1 client-to-server message `probe_done`",
+  "description": "Ends the uplink probe burst.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "probe_done"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "sent": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "bytes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "first_send_us": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "last_send_us": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "t",
+    "sent",
+    "bytes",
+    "first_send_us",
+    "last_send_us"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/client/stats.schema.json",
+  "title": "zakadi.v1 client-to-server message `stats`",
+  "description": "Transport and encoder statistics every stats_interval_ms.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "stats"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "queued_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "queue_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "enc_queue": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "encoded_kbps": {
+      "type": "number",
+      "minimum": 0
+    },
+    "pre_encode_drops": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "captured_fps": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rtt_ms": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ]
+    },
+    "battery_low": {
+      "type": "boolean"
+    },
+    "thermal": {
+      "enum": [
+        "nominal",
+        "fair",
+        "serious",
+        "critical"
+      ]
+    }
+  },
+  "required": [
+    "t",
+    "queued_bytes",
+    "queue_ms",
+    "encoded_kbps",
+    "captured_fps"
+  ]
+}

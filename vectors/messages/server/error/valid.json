@@ -1,0 +1,5 @@
+{
+  "t": "error",
+  "code": "admission",
+  "detail": "retry_after=5"
+}

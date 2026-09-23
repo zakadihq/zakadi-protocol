@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/server/pong.schema.json",
+  "title": "zakadi.v1 server-to-client message `pong`",
+  "description": "Reply to a client-initiated ping.",
+  "type": "object",
+  "properties": {
+    "t": {
+      "const": "pong"
+    },
+    "id": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "re": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/id"
+    },
+    "server_ms": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/serverMs"
+    }
+  },
+  "required": [
+    "t",
+    "re",
+    "server_ms"
+  ]
+}

@@ -45,6 +45,15 @@ jobs:
         run: npm install -g npm@latest && npm --version
       - run: npm ci
         working-directory: ${{ matrix.package }}
-      - name: Publish (trusted publishing, provenance attached automatically)
-        run: npm publish --access public
+      - name: Stage the release (trusted publishing; approval with 2FA happens by hand)
+        run: npm stage publish --access public
+        working-directory: ${{ matrix.package }}
+      - name: Show the staged version
+        run: |
+          name=$(node -p "require('./package.json').name")
+          echo "## Staged: $name" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          npm stage list "$name" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "Approve with: npm stage approve <stage-id> (prompts for 2FA)" >> "$GITHUB_STEP_SUMMARY"
         working-directory: ${{ matrix.package }}

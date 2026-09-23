@@ -1,0 +1,6 @@
+{
+  "name": "batch-out-of-order",
+  "description": "Batch records with decreasing pts_delta_ms.",
+  "hex": "304003006400000001001400010100000002",
+  "error": "batch_out_of_order"
+}

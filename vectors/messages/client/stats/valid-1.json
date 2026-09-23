@@ -1,0 +1,9 @@
+{
+  "t": "stats",
+  "queued_bytes": 0,
+  "queue_ms": 0,
+  "encoded_kbps": 0,
+  "captured_fps": 0,
+  "rtt_ms": null,
+  "thermal": "critical"
+}
