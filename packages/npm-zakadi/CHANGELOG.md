@@ -6,6 +6,12 @@ All notable changes to `zakadi` are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Nothing yet.
+
+## [0.1.0] - 2026-09-23
+
 ### Changed
 
 - Licence: Apache License 2.0 with a NOTICE file (0.0.1 shipped with an
@@ -19,4 +25,5 @@ All notable changes to `zakadi` are documented here. The format follows
   with cues and redial availability, `end` reason mapping, WebSocket close codes and
   challenge kinds from the Zakadi protocol specification.
 
-[Unreleased]: https://github.com/zakadihq/zakadi-protocol/commits/main
+[Unreleased]: https://github.com/zakadihq/zakadi-protocol/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/zakadihq/zakadi-protocol/releases/tag/v0.1.0
