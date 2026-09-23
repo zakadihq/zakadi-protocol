@@ -6,4 +6,4 @@ This package holds the values every Zakadi client and server agree on: session s
 
 Status: pre-release. Contents track the Zakadi protocol specification; nothing is stable before 1.0.
 
-Links: https://zakadi.dev (documentation), https://github.com/mosesgameli/zakadi-protocol (source).
+Links: https://zakadi.dev (documentation), https://github.com/zakadihq/zakadi-protocol (source).

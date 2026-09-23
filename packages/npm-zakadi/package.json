@@ -12,10 +12,10 @@
   "homepage": "https://zakadi.dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mosesgameli/zakadi-protocol.git",
+    "url": "git+https://github.com/zakadihq/zakadi-protocol.git",
     "directory": "packages/npm-zakadi"
   },
-  "bugs": "https://github.com/mosesgameli/zakadi-protocol/issues",
+  "bugs": "https://github.com/zakadihq/zakadi-protocol/issues",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Moses Gameli",
   "type": "module",
