@@ -57,7 +57,7 @@
     "lint": "npm run generate && eslint . && tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.5",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^20.19.43",
     "ajv": "^8.20.0",
     "eslint": "^10.11.0",
