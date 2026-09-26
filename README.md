@@ -5,13 +5,15 @@ The Zakadi wire protocol `zakadi.v1`: the machine-readable source of truth that 
 ## Contents
 
 - `schemas/v1/` - JSON Schemas (draft 2020-12) for every control message, one file per message type under `client/` and `server/`, the direction aggregates `client.schema.json` and `server.schema.json`, shared definitions in `common.schema.json`, and the schemas of the vector files themselves. Unknown message types and unknown fields are valid on the wire and must be ignored; the schemas validate known types only.
-- `vectors/` - conformance vectors: message instances (valid and invalid), binary framing cases with `.bin` files, hash-chain cases, and session transcripts for fake-server and client-simulator harnesses. See `vectors/README.md`.
-- `conformance/` - the uv-managed Python reference implementation (framing, hash chain), the generator that writes `schemas/` and `vectors/` deterministically, and the checker. See `conformance/README.md`.
+- `vectors/` - conformance vectors: message instances (valid and invalid), binary framing cases with `.bin` files, hash-chain cases, session transcripts for fake-server and client-simulator harnesses, and `keys/jwks.json`, the public JWKS of the test key that signs every vector token. See `vectors/README.md`.
+- `conformance/` - the uv-managed Python reference implementation (framing, hash chain, ES256 tokens), the generator that writes `schemas/` and `vectors/` deterministically, the checker, and the private half of the vectors' test key, which no package or archive ships. See `conformance/README.md`.
 - `packages/npm/` - `@zakadi/protocol`, the artefact SDKs pin: the protocol constants, a TypeScript type and a standalone validator (no runtime dependency) generated for every message type and both direction aggregates, copies of `schemas/v1/` and `vectors/`, and the Node-only `@zakadi/protocol/vectors` entry that locates and parses them; `npm test` there copies, generates, builds and tests. `packages/npm-zakadi/` - the unscoped `zakadi` name holder with the same constants.
 
 ## Using the vectors in an SDK
 
 Run every file under `vectors/` in your test suite: decode each framing case and compare the header and payload (or the error code); validate every message instance against the schema of its type and assert the `invalid-*` ones fail; recompute each chain case from `session_id` and `jti` and compare every `chain_after`; replay the `s2c` lines of each transcript and assert your client emits the `c2s` lines in order (or the reverse for a server). Unknown `t` values in a transcript must be ignored, not rejected.
+
+All vectors belong to one session: its id is `ses_` and a ULID, and every client token is an ES256 JWS with the claims of `spec/02-api.md` 2.2, signed by the test key whose public JWKS is `vectors/keys/jwks.json` (kid `zakadi-vectors-test-1`). A server that verifies tokens replays the transcripts unmodified when its tests trust that JWKS and run on a clock inside the tokens' validity (`iat` 2025-09-22T12:00:00Z, `exp` 300 s later); the key is a test key, never to be trusted outside tests. `sessions/framing-timeout.jsonl` is the no-face session with continuous media: its `attest` chains are computed over the summarised messages with zero-filled payloads, so a client simulator that sends such payloads can send its `attest` lines unmodified.
 
 ## Releases
 
