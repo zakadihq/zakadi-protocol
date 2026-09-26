@@ -8,7 +8,21 @@ All notable changes to `@zakadi/protocol` are documented here. The format follow
 
 ### Added
 
-- Nothing yet.
+- `vectors/keys/jwks.json`, the public JWKS of the test key (kid `zakadi-vectors-test-1`) that
+  signs every vector token.
+- `vectors/sessions/framing-timeout.jsonl`, the no-face session: FRAMING passes its 15 s cap, a
+  coaching turn follows and `end` `aborted` `attempts_exhausted` with `retry` true comes 15 s
+  later, with continuous media, pings, `stats` and `attest` throughout.
+
+### Changed
+
+- Every vector token is an ES256 JWS signed by that key with the claims of the API's
+  `client_token`, and every vector names one session id, `ses_` and a ULID, so a server that
+  verifies tokens replays the vectors unmodified.
+- The transcripts follow `ready` with `ping` `p1`, bracket every `say` with `audio_state` started
+  and ended, never leave more than 1.2 s without a cue while framing, acting or listening, keep
+  FRAMING's 15 s cap and summarise probes at rung 0; the attestation examples carry the
+  `request_hash` of the vectors' session.
 
 ## [0.1.0] - 2026-09-23
 
