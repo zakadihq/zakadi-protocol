@@ -8,9 +8,9 @@ All notable changes to `zakadi` are documented here. The format follows
 
 ## [0.2.0] - 2026-09-26
 
-### Added
+### Changed
 
-- Nothing yet.
+- Released in lockstep with `@zakadi/protocol` 0.2.0 (the signed vectors and the no-face session); nothing in this package changed.
 
 ## [0.1.0] - 2026-09-23
 
