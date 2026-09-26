@@ -1,0 +1,13 @@
+{
+  "keys": [
+    {
+      "kty": "EC",
+      "crv": "P-256",
+      "kid": "zakadi-vectors-test-1",
+      "use": "sig",
+      "alg": "ES256",
+      "x": "IVyP2MZE3dceGsRznXc1XQ7rq6amreYWV3ZhABlG67w",
+      "y": "enBp3jxoRZaWX5ZH7DrJN2s1cf2MTfd-S29JpC4qRtk"
+    }
+  ]
+}

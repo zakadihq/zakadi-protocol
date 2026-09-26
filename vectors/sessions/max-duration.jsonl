@@ -1,33 +1,144 @@
-{"meta": {"name": "max-duration", "protocol": "zakadi.v1", "session_id": "ses_01J8VECTOR000000000001", "jti": "AAECAwQFBgcICQoLDA0ODw", "description": "The media clock passes 60 s without completion: end aborted max_duration, close 4009.", "expect": {"end": {"outcome": "aborted", "reason": "max_duration"}, "close": 4009}}}
-{"t_ms": 0, "dir": "c2s", "msg": {"t": "hello", "v": 1, "token": "eyJhbGciOiJFUzI1NiIsImtpZCI6InRlc3QifQ.eyJpc3MiOiJhcGkuemFrYWRpLmRldiIsImF1ZCI6ImluZ2VzdCIsInN1YiI6InNlc18wMUo4VkVDVE9SMDAwMDAwMDAwMDAxIiwidGlkIjoidGVuYW50IiwianRpIjoiQUFFQ0F3UUZCZ2NJQ1FvTERBME9EdyIsImlhdCI6MTc1ODU0MjQwMCwibmJmIjoxNzU4NTQyNDAwLCJleHAiOjE3NTg1NDI3MDAsInBvbCI6MTIsImJhbmRfbWF4IjoiQiIsImluZyI6WyJldS13ZXN0LTIiXSwibm9uY2UiOiI4SjB3WXc2Tk1ReFJrNGIzd3ZrQWdBIiwibGFuZyI6ImVuLU5HIn0.dGVzdC1zaWduYXR1cmUtbm90LXZhbGlk", "sdk": {"platform": "web", "name": "@zakadi/web-core", "version": "1.4.2", "os": "Android 13", "device": "TECNO KI5q", "browser": "Chrome 128", "wrapper": {"name": "@zakadi/react", "version": "1.0.3"}}, "caps": {"profile": "webcodecs", "video": ["avc1.42E01F", "vp8"], "audio": ["opus", "aac"], "hw_encode": true, "keyframe_on_demand": true, "bitrate_reconfig": true, "max_resolution": {"w": 720, "h": 1280}, "max_fps": 30, "attestation": "none"}, "prompt_pack": {"lang": "en-NG", "version": "2026.09.1"}, "a11y": {"screen_reader": false, "captions": true, "reduced_motion": false, "extended_time": false}, "consent": {"biometric": true, "recording": true, "at_ms_wall": 1758542400000}}}
-{"t_ms": 120, "dir": "s2c", "msg": {"t": "ready", "session_id": "ses_01J8VECTOR000000000001", "server_ms": 0, "ladder": [{"rung": 0, "w": 480, "h": 640, "fps": 20, "video_kbps": 900, "audio_kbps": 24}, {"rung": 1, "w": 480, "h": 640, "fps": 20, "video_kbps": 600, "audio_kbps": 24}, {"rung": 2, "w": 480, "h": 640, "fps": 15, "video_kbps": 400, "audio_kbps": 24}, {"rung": 3, "w": 336, "h": 448, "fps": 12, "video_kbps": 250, "audio_kbps": 16}, {"rung": 4, "w": 288, "h": 384, "fps": 10, "video_kbps": 150, "audio_kbps": 12}], "start_rung": 2, "probe": {"count": 8, "bytes": 8192, "window_ms": 1500}, "gop_ms": 2000, "stats_interval_ms": 500, "attest_interval_ms": 1000, "attest_nonce": "8J0wYw6NMQxRk4b3wvkAgA", "max_media_ms": 60000, "ping_interval_ms": 10000, "features": {"nonce_tile": true, "keyframe_requests": true}}}
+{"meta": {"name": "max-duration", "protocol": "zakadi.v1", "session_id": "ses_01K5RMQ2G0VECT0R0000000001", "jti": "AAECAwQFBgcICQoLDA0ODw", "description": "Framing succeeds, then head turns, finger counts and spoken digits are retried until the media clock passes 60 s: end aborted max_duration, close 4009.", "expect": {"end": {"outcome": "aborted", "reason": "max_duration"}, "close": 4009}}}
+{"t_ms": 0, "dir": "c2s", "msg": {"t": "hello", "v": 1, "token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Inpha2FkaS12ZWN0b3JzLXRlc3QtMSJ9.eyJpc3MiOiJhcGkuemFrYWRpLmRldiIsImF1ZCI6ImluZ2VzdCIsInN1YiI6InNlc18wMUs1Uk1RMkcwVkVDVDBSMDAwMDAwMDAwMSIsInRpZCI6InRlbmFudCIsImp0aSI6IkFBRUNBd1FGQmdjSUNRb0xEQTBPRHciLCJpYXQiOjE3NTg1NDI0MDAsIm5iZiI6MTc1ODU0MjQwMCwiZXhwIjoxNzU4NTQyNzAwLCJwb2wiOjEyLCJiYW5kX21heCI6IkIiLCJpbmciOlsiZXUtd2VzdC0yIl0sIm5vbmNlIjoiOEowd1l3Nk5NUXhSazRiM3d2a0FnQSIsImxhbmciOiJlbi1ORyJ9.it_qSLjo3Phxizz1zo6fOaEyfA0Xib3-MGT61di4kvVk0OIq_vw0arq15MxNXdMuiieNR5P9XsoXeN51vutYxw", "sdk": {"platform": "web", "name": "@zakadi/web-core", "version": "1.4.2", "os": "Android 13", "device": "TECNO KI5q", "browser": "Chrome 128", "wrapper": {"name": "@zakadi/react", "version": "1.0.3"}}, "caps": {"profile": "webcodecs", "video": ["avc1.42E01F", "vp8"], "audio": ["opus", "aac"], "hw_encode": true, "keyframe_on_demand": true, "bitrate_reconfig": true, "max_resolution": {"w": 720, "h": 1280}, "max_fps": 30, "attestation": "none"}, "prompt_pack": {"lang": "en-NG", "version": "2026.09.1"}, "a11y": {"screen_reader": false, "captions": true, "reduced_motion": false, "extended_time": false}, "consent": {"biometric": true, "recording": true, "at_ms_wall": 1758542400000}}}
+{"t_ms": 120, "dir": "s2c", "msg": {"t": "ready", "session_id": "ses_01K5RMQ2G0VECT0R0000000001", "server_ms": 0, "ladder": [{"rung": 0, "w": 480, "h": 640, "fps": 20, "video_kbps": 900, "audio_kbps": 24}, {"rung": 1, "w": 480, "h": 640, "fps": 20, "video_kbps": 600, "audio_kbps": 24}, {"rung": 2, "w": 480, "h": 640, "fps": 15, "video_kbps": 400, "audio_kbps": 24}, {"rung": 3, "w": 336, "h": 448, "fps": 12, "video_kbps": 250, "audio_kbps": 16}, {"rung": 4, "w": 288, "h": 384, "fps": 10, "video_kbps": 150, "audio_kbps": 12}], "start_rung": 2, "probe": {"count": 8, "bytes": 8192, "window_ms": 1500}, "gop_ms": 2000, "stats_interval_ms": 500, "attest_interval_ms": 1000, "attest_nonce": "8J0wYw6NMQxRk4b3wvkAgA", "max_media_ms": 60000, "ping_interval_ms": 10000, "features": {"nonce_tile": true, "keyframe_requests": true}}}
 {"t_ms": 130, "dir": "s2c", "msg": {"t": "ping", "id": "p1", "server_ms": 130, "rtt_ms": null, "rx_kbps": null}}
-{"t_ms": 140, "dir": "c2s", "msg": {"t": "pong", "re": "p1", "at_ms": 0}}
-{"t_ms": 150, "dir": "c2s", "media": {"type": 2, "seq": 0, "pts_ms": 0, "rung": 2, "bytes": 8192}}
-{"t_ms": 170, "dir": "c2s", "media": {"type": 2, "seq": 1, "pts_ms": 0, "rung": 2, "bytes": 8192}}
-{"t_ms": 190, "dir": "c2s", "media": {"type": 2, "seq": 2, "pts_ms": 0, "rung": 2, "bytes": 8192}}
-{"t_ms": 210, "dir": "c2s", "media": {"type": 2, "seq": 3, "pts_ms": 0, "rung": 2, "bytes": 8192}}
-{"t_ms": 230, "dir": "c2s", "media": {"type": 2, "seq": 4, "pts_ms": 0, "rung": 2, "bytes": 8192}}
-{"t_ms": 250, "dir": "c2s", "media": {"type": 2, "seq": 5, "pts_ms": 0, "rung": 2, "bytes": 8192}}
-{"t_ms": 270, "dir": "c2s", "media": {"type": 2, "seq": 6, "pts_ms": 0, "rung": 2, "bytes": 8192}}
-{"t_ms": 290, "dir": "c2s", "media": {"type": 2, "seq": 7, "pts_ms": 0, "rung": 2, "bytes": 8192}}
+{"t_ms": 150, "dir": "c2s", "media": {"type": 2, "seq": 0, "pts_ms": 0, "rung": 0, "bytes": 8192}}
+{"t_ms": 170, "dir": "c2s", "media": {"type": 2, "seq": 1, "pts_ms": 0, "rung": 0, "bytes": 8192}}
+{"t_ms": 190, "dir": "c2s", "media": {"type": 2, "seq": 2, "pts_ms": 0, "rung": 0, "bytes": 8192}}
+{"t_ms": 210, "dir": "c2s", "media": {"type": 2, "seq": 3, "pts_ms": 0, "rung": 0, "bytes": 8192}}
+{"t_ms": 230, "dir": "c2s", "media": {"type": 2, "seq": 4, "pts_ms": 0, "rung": 0, "bytes": 8192}}
+{"t_ms": 250, "dir": "c2s", "media": {"type": 2, "seq": 5, "pts_ms": 0, "rung": 0, "bytes": 8192}}
+{"t_ms": 270, "dir": "c2s", "media": {"type": 2, "seq": 6, "pts_ms": 0, "rung": 0, "bytes": 8192}}
+{"t_ms": 290, "dir": "c2s", "media": {"type": 2, "seq": 7, "pts_ms": 0, "rung": 0, "bytes": 8192}}
 {"t_ms": 310, "dir": "c2s", "msg": {"t": "probe_done", "sent": 8, "bytes": 65536, "first_send_us": 150000, "last_send_us": 290000}}
+{"t_ms": 320, "dir": "c2s", "msg": {"t": "pong", "re": "p1", "at_ms": 0}}
 {"t_ms": 520, "dir": "s2c", "msg": {"t": "probe_result", "goodput_kbps": 640, "rtt_ms": 190, "start_rung": 2}}
 {"t_ms": 530, "dir": "c2s", "msg": {"t": "config", "video": {"codec": "avc1.42E01F", "w": 480, "h": 640, "fps": 15, "bitrate_kbps": 400, "annexb": true, "container": null, "mirrored": false, "rotation": 0, "gop_ms": 2000}, "audio": {"codec": "opus", "sample_rate": 16000, "channels": 1, "bitrate_kbps": 24, "frame_ms": 20, "muxed_in_video": false, "echo_cancellation": false, "noise_suppression": false, "auto_gain": false}, "rung": 2, "clock_source": "shared"}}
 {"t_ms": 535, "dir": "c2s", "msg": {"t": "camera_meta", "source": "getUserMedia", "devices": [{"kind": "videoinput", "label": "camera2 1, facing front", "device_id_hash": "5f1b2c9e0d4a7b6c8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d", "group_id_hash": "0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d"}], "capabilities": {"width": {"min": 1, "max": 1280}, "height": {"min": 1, "max": 720}, "frameRate": {"min": 1, "max": 30}}, "settings": {"width": 640, "height": 480, "frameRate": 30, "facingMode": "user"}, "encoder": {"impl": "hardware", "is_config_supported": {"avc1.42E01F": true, "vp8": true}}, "probe": [{"request": {"height": 3001}, "reported": {"w": 1280, "h": 720}, "observed": {"w": 1280, "h": 720, "fps": 29.6}, "reconfig_ms": 143, "method": "rvfc"}, {"request": {"height": 11}, "reported": {"w": 160, "h": 120}, "observed": {"w": 160, "h": 120, "fps": 30.1}, "reconfig_ms": 121, "method": "rvfc"}, {"request": {"height": 640}, "reported": {"w": 480, "h": 640}, "observed": {"w": 480, "h": 640, "fps": 29.8}, "reconfig_ms": 98, "method": "rvfc"}, {"request": {"height": 240}, "reported": {"w": 320, "h": 240}, "observed": {"w": 320, "h": 240, "fps": 30.0}, "reconfig_ms": 95, "method": "rvfc"}, {"request": {"height": 2001}, "reported": {"w": 1280, "h": 720}, "observed": {"w": 1280, "h": 720, "fps": 29.9}, "reconfig_ms": 140, "method": "rvfc"}, {"request": {"height": 22}, "reported": {"w": 160, "h": 120}, "observed": {"w": 160, "h": 120, "fps": 30.0}, "reconfig_ms": 118, "method": "rvfc"}, {"request": {"height": 1001}, "reported": {"w": 1280, "h": 720}, "observed": {"w": 1280, "h": 720, "fps": 29.7}, "reconfig_ms": 139, "method": "rvfc"}, {"request": {"fps": 200}, "reported": {"w": 640, "h": 480, "fps": 30}, "observed": {"w": 640, "h": 480, "fps": 30.0}, "reconfig_ms": 88, "method": "rvfc"}, {"request": {"fps": 1}, "reported": {"w": 640, "h": 480, "fps": 1}, "observed": {"w": 640, "h": 480, "fps": 1.0}, "reconfig_ms": 402, "method": "rvfc"}, {"request": {"fps": 60}, "reported": {"w": 640, "h": 480, "fps": 30}, "observed": {"w": 640, "h": 480, "fps": 29.9}, "reconfig_ms": 90, "method": "rvfc"}, {"request": {"fps": 120}, "skipped": true}, {"request": {"fps": 5}, "skipped": true}, {"request": {"fps": 30}, "skipped": true}]}}
 {"t_ms": 560, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "framing", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "wave"}, "caption": {"text": "Hi.", "pictogram": "wave"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 0, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
 {"t_ms": 562, "dir": "s2c", "msg": {"t": "say", "id": "s1", "cue": "greet.short", "caption": "Hi. Quick automated check."}}
-{"t_ms": 15000, "dir": "s2c", "msg": {"t": "say", "id": "s2", "cue": "frame.center", "caption": "Move to the centre of the oval."}}
-{"t_ms": 15040, "dir": "c2s", "msg": {"t": "audio_state", "re": "s2", "event": "started", "at_ms": 14500}}
-{"t_ms": 16900, "dir": "c2s", "msg": {"t": "audio_state", "re": "s2", "event": "ended", "at_ms": 16360}}
-{"t_ms": 30000, "dir": "s2c", "msg": {"t": "say", "id": "s3", "cue": "frame.center", "caption": "Move to the centre of the oval."}}
-{"t_ms": 30040, "dir": "c2s", "msg": {"t": "audio_state", "re": "s3", "event": "started", "at_ms": 29500}}
-{"t_ms": 31900, "dir": "c2s", "msg": {"t": "audio_state", "re": "s3", "event": "ended", "at_ms": 31360}}
-{"t_ms": 45000, "dir": "s2c", "msg": {"t": "say", "id": "s4", "cue": "frame.center", "caption": "Move to the centre of the oval."}}
-{"t_ms": 45040, "dir": "c2s", "msg": {"t": "audio_state", "re": "s4", "event": "started", "at_ms": 44500}}
-{"t_ms": 46900, "dir": "c2s", "msg": {"t": "audio_state", "re": "s4", "event": "ended", "at_ms": 46360}}
-{"t_ms": 58000, "dir": "s2c", "msg": {"t": "say", "id": "s5", "cue": "frame.center", "caption": "Move to the centre of the oval."}}
-{"t_ms": 58040, "dir": "c2s", "msg": {"t": "audio_state", "re": "s5", "event": "started", "at_ms": 57500}}
+{"t_ms": 612, "dir": "c2s", "msg": {"t": "audio_state", "re": "s1", "event": "started", "at_ms": 72}}
+{"t_ms": 2412, "dir": "c2s", "msg": {"t": "audio_state", "re": "s1", "event": "ended", "at_ms": 1872}}
+{"t_ms": 2600, "dir": "s2c", "msg": {"t": "say", "id": "s2", "cue": "frame.arm_length", "caption": "Hold your phone at arm's length."}}
+{"t_ms": 2650, "dir": "c2s", "msg": {"t": "audio_state", "re": "s2", "event": "started", "at_ms": 2110}}
+{"t_ms": 4650, "dir": "c2s", "msg": {"t": "audio_state", "re": "s2", "event": "ended", "at_ms": 4110}}
+{"t_ms": 4900, "dir": "s2c", "msg": {"t": "say", "id": "s3", "cue": "frame.perfect", "caption": "Perfect."}}
+{"t_ms": 4950, "dir": "c2s", "msg": {"t": "audio_state", "re": "s3", "event": "started", "at_ms": 4410}}
+{"t_ms": 5450, "dir": "c2s", "msg": {"t": "audio_state", "re": "s3", "event": "ended", "at_ms": 4910}}
+{"t_ms": 6000, "dir": "s2c", "msg": {"t": "say", "id": "s4", "cue": "action.head_turn.demo", "caption": "Turn your head slowly, like this."}}
+{"t_ms": 6000, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "action", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": true, "direction": "user_left", "progress": 0.0}, "character": {"anim": "demo_head_turn_left"}, "caption": {"text": "Turn your head slowly, like this.", "pictogram": "head_turn_left"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 1, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 6010, "dir": "s2c", "msg": {"t": "tile", "symbol": 5, "min_ms": 400}}
+{"t_ms": 6012, "dir": "s2c", "msg": {"t": "action", "id": "a1", "kind": "head_turn", "params": {"direction": "user_left", "min_deg": 18, "hold_ms": 250}, "deadline_ms": 7000, "keyframe": true, "say": "s4"}}
+{"t_ms": 6050, "dir": "c2s", "msg": {"t": "audio_state", "re": "s4", "event": "started", "at_ms": 5510}}
+{"t_ms": 7700, "dir": "c2s", "msg": {"t": "audio_state", "re": "s4", "event": "ended", "at_ms": 7160}}
+{"t_ms": 8700, "dir": "s2c", "msg": {"t": "say", "id": "s5", "cue": "hold.almost", "caption": "Almost there."}}
+{"t_ms": 8750, "dir": "c2s", "msg": {"t": "audio_state", "re": "s5", "event": "started", "at_ms": 8210}}
+{"t_ms": 9450, "dir": "c2s", "msg": {"t": "audio_state", "re": "s5", "event": "ended", "at_ms": 8910}}
+{"t_ms": 10450, "dir": "s2c", "msg": {"t": "say", "id": "s6", "cue": "hold.almost", "caption": "Almost there."}}
+{"t_ms": 10500, "dir": "c2s", "msg": {"t": "audio_state", "re": "s6", "event": "started", "at_ms": 9960}}
+{"t_ms": 11200, "dir": "c2s", "msg": {"t": "audio_state", "re": "s6", "event": "ended", "at_ms": 10660}}
+{"t_ms": 12200, "dir": "s2c", "msg": {"t": "say", "id": "s7", "cue": "hold.moment", "caption": "One moment."}}
+{"t_ms": 12250, "dir": "c2s", "msg": {"t": "audio_state", "re": "s7", "event": "started", "at_ms": 11710}}
+{"t_ms": 12950, "dir": "c2s", "msg": {"t": "audio_state", "re": "s7", "event": "ended", "at_ms": 12410}}
+{"t_ms": 13100, "dir": "s2c", "msg": {"t": "say", "id": "s8", "cue": "retry.once_more", "caption": "Let's try that once more."}}
+{"t_ms": 13150, "dir": "c2s", "msg": {"t": "audio_state", "re": "s8", "event": "started", "at_ms": 12610}}
+{"t_ms": 14650, "dir": "c2s", "msg": {"t": "audio_state", "re": "s8", "event": "ended", "at_ms": 14110}}
+{"t_ms": 14800, "dir": "s2c", "msg": {"t": "say", "id": "s9", "cue": "action.head_up.demo", "caption": "Tilt your head up, like this."}}
+{"t_ms": 14800, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "action", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": true, "direction": "up", "progress": 0.0}, "character": {"anim": "demo_head_up"}, "caption": {"text": "Tilt your head up, like this.", "pictogram": "head_up"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 1, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 14810, "dir": "s2c", "msg": {"t": "tile", "symbol": 2, "min_ms": 400}}
+{"t_ms": 14812, "dir": "s2c", "msg": {"t": "action", "id": "a2", "kind": "head_turn", "params": {"direction": "up", "min_deg": 16, "hold_ms": 200}, "deadline_ms": 7000, "keyframe": true, "say": "s9"}}
+{"t_ms": 14850, "dir": "c2s", "msg": {"t": "audio_state", "re": "s9", "event": "started", "at_ms": 14310}}
+{"t_ms": 16450, "dir": "c2s", "msg": {"t": "audio_state", "re": "s9", "event": "ended", "at_ms": 15910}}
+{"t_ms": 17250, "dir": "s2c", "msg": {"t": "keyframe", "id": "k1", "reason": "apex", "boost_kbps": 1200, "boost_ms": 600}}
+{"t_ms": 17310, "dir": "c2s", "media": {"type": 0, "seq": 251, "pts_ms": 16770, "rung": 2, "bytes": 21000, "keyframe": true, "param_sets": true}}
+{"t_ms": 17450, "dir": "s2c", "msg": {"t": "say", "id": "s10", "cue": "ack.nice", "caption": "Nice."}}
+{"t_ms": 17450, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "holding", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "nod"}, "caption": {"text": "Nice.", "pictogram": "check"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 1, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 17500, "dir": "c2s", "msg": {"t": "audio_state", "re": "s10", "event": "started", "at_ms": 16960}}
+{"t_ms": 17900, "dir": "c2s", "msg": {"t": "audio_state", "re": "s10", "event": "ended", "at_ms": 17360}}
+{"t_ms": 18950, "dir": "s2c", "msg": {"t": "say", "id": "s11", "cue": "action.fingers.demo", "params": {"count": 3}, "caption": "Show three fingers beside your face."}}
+{"t_ms": 18950, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "action", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "demo_fingers_3"}, "caption": {"text": "Show three fingers beside your face.", "pictogram": "fingers_3"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 2, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 18960, "dir": "s2c", "msg": {"t": "tile", "symbol": 6, "min_ms": 400}}
+{"t_ms": 18962, "dir": "s2c", "msg": {"t": "action", "id": "a3", "kind": "fingers", "params": {"count": 3, "hand": "either", "placement": "beside_face"}, "deadline_ms": 7000, "keyframe": true, "say": "s11"}}
+{"t_ms": 19000, "dir": "c2s", "msg": {"t": "audio_state", "re": "s11", "event": "started", "at_ms": 18460}}
+{"t_ms": 20750, "dir": "c2s", "msg": {"t": "audio_state", "re": "s11", "event": "ended", "at_ms": 20210}}
+{"t_ms": 21750, "dir": "s2c", "msg": {"t": "say", "id": "s12", "cue": "hold.almost", "caption": "Almost there."}}
+{"t_ms": 21800, "dir": "c2s", "msg": {"t": "audio_state", "re": "s12", "event": "started", "at_ms": 21260}}
+{"t_ms": 22500, "dir": "c2s", "msg": {"t": "audio_state", "re": "s12", "event": "ended", "at_ms": 21960}}
+{"t_ms": 23500, "dir": "s2c", "msg": {"t": "say", "id": "s13", "cue": "hold.almost", "caption": "Almost there."}}
+{"t_ms": 23550, "dir": "c2s", "msg": {"t": "audio_state", "re": "s13", "event": "started", "at_ms": 23010}}
+{"t_ms": 24250, "dir": "c2s", "msg": {"t": "audio_state", "re": "s13", "event": "ended", "at_ms": 23710}}
+{"t_ms": 25250, "dir": "s2c", "msg": {"t": "say", "id": "s14", "cue": "hold.moment", "caption": "One moment."}}
+{"t_ms": 25300, "dir": "c2s", "msg": {"t": "audio_state", "re": "s14", "event": "started", "at_ms": 24760}}
+{"t_ms": 26000, "dir": "c2s", "msg": {"t": "audio_state", "re": "s14", "event": "ended", "at_ms": 25460}}
+{"t_ms": 26050, "dir": "s2c", "msg": {"t": "say", "id": "s15", "cue": "retry.once_more", "caption": "Let's try that once more."}}
+{"t_ms": 26100, "dir": "c2s", "msg": {"t": "audio_state", "re": "s15", "event": "started", "at_ms": 25560}}
+{"t_ms": 27600, "dir": "c2s", "msg": {"t": "audio_state", "re": "s15", "event": "ended", "at_ms": 27060}}
+{"t_ms": 27750, "dir": "s2c", "msg": {"t": "say", "id": "s16", "cue": "action.fingers.demo", "params": {"count": 3}, "caption": "Show three fingers beside your face."}}
+{"t_ms": 27750, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "action", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "demo_fingers_3"}, "caption": {"text": "Show three fingers beside your face.", "pictogram": "fingers_3"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 2, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 27760, "dir": "s2c", "msg": {"t": "tile", "symbol": 1, "min_ms": 400}}
+{"t_ms": 27762, "dir": "s2c", "msg": {"t": "action", "id": "a4", "kind": "fingers", "params": {"count": 3, "hand": "left", "placement": "beside_face"}, "deadline_ms": 7000, "keyframe": true, "say": "s16"}}
+{"t_ms": 27800, "dir": "c2s", "msg": {"t": "audio_state", "re": "s16", "event": "started", "at_ms": 27260}}
+{"t_ms": 29550, "dir": "c2s", "msg": {"t": "audio_state", "re": "s16", "event": "ended", "at_ms": 29010}}
+{"t_ms": 30250, "dir": "s2c", "msg": {"t": "keyframe", "id": "k2", "reason": "apex", "boost_kbps": 1200, "boost_ms": 600}}
+{"t_ms": 30320, "dir": "c2s", "media": {"type": 0, "seq": 446, "pts_ms": 29780, "rung": 2, "bytes": 20400, "keyframe": true, "param_sets": true}}
+{"t_ms": 30550, "dir": "s2c", "msg": {"t": "say", "id": "s17", "cue": "ack.got_it", "caption": "Got it, thank you."}}
+{"t_ms": 30550, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "holding", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "nod"}, "caption": {"text": "Got it, thank you.", "pictogram": "check"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 1, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 30600, "dir": "c2s", "msg": {"t": "audio_state", "re": "s17", "event": "started", "at_ms": 30060}}
+{"t_ms": 31500, "dir": "c2s", "msg": {"t": "audio_state", "re": "s17", "event": "ended", "at_ms": 30960}}
+{"t_ms": 32600, "dir": "s2c", "msg": {"t": "say", "id": "s18", "cue": "digits.say", "params": {"digits": [4, 7, 2, 9]}, "caption": "Say these numbers out loud: four, seven, two, nine."}}
+{"t_ms": 32600, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "listening", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "listen"}, "caption": {"text": "Say these numbers out loud.", "pictogram": "speak"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 2, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 32610, "dir": "s2c", "msg": {"t": "tile", "symbol": 0, "min_ms": 400}}
+{"t_ms": 32612, "dir": "s2c", "msg": {"t": "action", "id": "a5", "kind": "digits", "params": {"values": [4, 7, 2, 9], "lang": "en-NG"}, "deadline_ms": 8000, "say": "s18"}}
+{"t_ms": 32650, "dir": "c2s", "msg": {"t": "audio_state", "re": "s18", "event": "started", "at_ms": 32110}}
+{"t_ms": 35800, "dir": "c2s", "msg": {"t": "audio_state", "re": "s18", "event": "ended", "at_ms": 35260}}
+{"t_ms": 35800, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "listening", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "listen"}, "caption": {"text": "Say these numbers out loud.", "pictogram": "speak"}, "digits": {"visible": true, "values": [4, 7, 2, 9]}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 2, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 36800, "dir": "s2c", "msg": {"t": "say", "id": "s19", "cue": "ack.mmhm", "caption": "Mm-hmm."}}
+{"t_ms": 36850, "dir": "c2s", "msg": {"t": "audio_state", "re": "s19", "event": "started", "at_ms": 36310}}
+{"t_ms": 37150, "dir": "c2s", "msg": {"t": "audio_state", "re": "s19", "event": "ended", "at_ms": 36610}}
+{"t_ms": 38150, "dir": "s2c", "msg": {"t": "say", "id": "s20", "cue": "hold.moment", "caption": "One moment."}}
+{"t_ms": 38200, "dir": "c2s", "msg": {"t": "audio_state", "re": "s20", "event": "started", "at_ms": 37660}}
+{"t_ms": 38900, "dir": "c2s", "msg": {"t": "audio_state", "re": "s20", "event": "ended", "at_ms": 38360}}
+{"t_ms": 39300, "dir": "s2c", "msg": {"t": "feedback", "code": "noisy_audio", "severity": "hint"}}
+{"t_ms": 39300, "dir": "s2c", "msg": {"t": "say", "id": "s21", "cue": "retry.louder", "caption": "Let's try that once more, a little louder."}}
+{"t_ms": 39350, "dir": "c2s", "msg": {"t": "audio_state", "re": "s21", "event": "started", "at_ms": 38810}}
+{"t_ms": 41150, "dir": "c2s", "msg": {"t": "audio_state", "re": "s21", "event": "ended", "at_ms": 40610}}
+{"t_ms": 41300, "dir": "s2c", "msg": {"t": "say", "id": "s22", "cue": "digits.say", "params": {"digits": [9, 1, 3, 8]}, "caption": "Say these numbers out loud: nine, one, three, eight."}}
+{"t_ms": 41300, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "listening", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "listen"}, "caption": {"text": "Say these numbers out loud.", "pictogram": "speak"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 2, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 41310, "dir": "s2c", "msg": {"t": "tile", "symbol": 4, "min_ms": 400}}
+{"t_ms": 41312, "dir": "s2c", "msg": {"t": "action", "id": "a6", "kind": "digits", "params": {"values": [9, 1, 3, 8], "lang": "en-NG"}, "deadline_ms": 8000, "say": "s22"}}
+{"t_ms": 41350, "dir": "c2s", "msg": {"t": "audio_state", "re": "s22", "event": "started", "at_ms": 40810}}
+{"t_ms": 44500, "dir": "c2s", "msg": {"t": "audio_state", "re": "s22", "event": "ended", "at_ms": 43960}}
+{"t_ms": 44500, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "listening", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "listen"}, "caption": {"text": "Say these numbers out loud.", "pictogram": "speak"}, "digits": {"visible": true, "values": [9, 1, 3, 8]}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 2, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 45500, "dir": "s2c", "msg": {"t": "say", "id": "s23", "cue": "ack.mmhm", "caption": "Mm-hmm."}}
+{"t_ms": 45550, "dir": "c2s", "msg": {"t": "audio_state", "re": "s23", "event": "started", "at_ms": 45010}}
+{"t_ms": 45850, "dir": "c2s", "msg": {"t": "audio_state", "re": "s23", "event": "ended", "at_ms": 45310}}
+{"t_ms": 46850, "dir": "s2c", "msg": {"t": "say", "id": "s24", "cue": "hold.moment", "caption": "One moment."}}
+{"t_ms": 46900, "dir": "c2s", "msg": {"t": "audio_state", "re": "s24", "event": "started", "at_ms": 46360}}
+{"t_ms": 47600, "dir": "c2s", "msg": {"t": "audio_state", "re": "s24", "event": "ended", "at_ms": 47060}}
+{"t_ms": 48000, "dir": "s2c", "msg": {"t": "feedback", "code": "noisy_audio", "severity": "hint"}}
+{"t_ms": 48000, "dir": "s2c", "msg": {"t": "say", "id": "s25", "cue": "retry.quiet_place", "caption": "Let's find a quieter place."}}
+{"t_ms": 48050, "dir": "c2s", "msg": {"t": "audio_state", "re": "s25", "event": "started", "at_ms": 47510}}
+{"t_ms": 49750, "dir": "c2s", "msg": {"t": "audio_state", "re": "s25", "event": "ended", "at_ms": 49210}}
+{"t_ms": 49900, "dir": "s2c", "msg": {"t": "say", "id": "s26", "cue": "digits.say", "params": {"digits": [5, 0, 6, 1]}, "caption": "Say these numbers out loud: five, zero, six, one."}}
+{"t_ms": 49900, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "listening", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "listen"}, "caption": {"text": "Say these numbers out loud.", "pictogram": "speak"}, "digits": {"visible": false, "values": []}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 2, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 49910, "dir": "s2c", "msg": {"t": "tile", "symbol": 3, "min_ms": 400}}
+{"t_ms": 49912, "dir": "s2c", "msg": {"t": "action", "id": "a7", "kind": "digits", "params": {"values": [5, 0, 6, 1], "lang": "en-NG"}, "deadline_ms": 8000, "say": "s26"}}
+{"t_ms": 49950, "dir": "c2s", "msg": {"t": "audio_state", "re": "s26", "event": "started", "at_ms": 49410}}
+{"t_ms": 53100, "dir": "c2s", "msg": {"t": "audio_state", "re": "s26", "event": "ended", "at_ms": 52560}}
+{"t_ms": 53100, "dir": "s2c", "msg": {"t": "ui", "state": {"phase": "listening", "self_view": {"oval": true, "oval_emphasis": "normal", "fill": "none"}, "arc": {"visible": false, "direction": "user_left", "progress": 0.0}, "character": {"anim": "listen"}, "caption": {"text": "Say these numbers out loud.", "pictogram": "speak"}, "digits": {"visible": true, "values": [5, 0, 6, 1]}, "surround": {"brightness": 0.9, "flood": false}, "badge": "automated", "progress": {"step": 2, "of": 2}, "controls": {"repeat": true, "more_time": true, "cancel": true}}}}
+{"t_ms": 54100, "dir": "s2c", "msg": {"t": "say", "id": "s27", "cue": "ack.mmhm", "caption": "Mm-hmm."}}
+{"t_ms": 54150, "dir": "c2s", "msg": {"t": "audio_state", "re": "s27", "event": "started", "at_ms": 53610}}
+{"t_ms": 54450, "dir": "c2s", "msg": {"t": "audio_state", "re": "s27", "event": "ended", "at_ms": 53910}}
+{"t_ms": 55450, "dir": "s2c", "msg": {"t": "say", "id": "s28", "cue": "hold.moment", "caption": "One moment."}}
+{"t_ms": 55500, "dir": "c2s", "msg": {"t": "audio_state", "re": "s28", "event": "started", "at_ms": 54960}}
+{"t_ms": 56200, "dir": "c2s", "msg": {"t": "audio_state", "re": "s28", "event": "ended", "at_ms": 55660}}
+{"t_ms": 56600, "dir": "s2c", "msg": {"t": "feedback", "code": "noisy_audio", "severity": "hint"}}
+{"t_ms": 56600, "dir": "s2c", "msg": {"t": "say", "id": "s29", "cue": "fail.one_more_step", "caption": "One more step."}}
+{"t_ms": 56650, "dir": "c2s", "msg": {"t": "audio_state", "re": "s29", "event": "started", "at_ms": 56110}}
+{"t_ms": 58150, "dir": "c2s", "msg": {"t": "audio_state", "re": "s29", "event": "ended", "at_ms": 57610}}
+{"t_ms": 59150, "dir": "s2c", "msg": {"t": "say", "id": "s30", "cue": "hold.moment", "caption": "One moment."}}
+{"t_ms": 59200, "dir": "c2s", "msg": {"t": "audio_state", "re": "s30", "event": "started", "at_ms": 58660}}
+{"t_ms": 59900, "dir": "c2s", "msg": {"t": "audio_state", "re": "s30", "event": "ended", "at_ms": 59360}}
 {"t_ms": 60560, "dir": "c2s", "media": {"type": 0, "seq": 900, "pts_ms": 60020, "rung": 2, "bytes": 3300}}
 {"t_ms": 60600, "dir": "s2c", "msg": {"t": "end", "outcome": "aborted", "reason": "max_duration", "retry": true}}
 {"t_ms": 60620, "dir": "s2c", "close": {"code": 4009}}

@@ -1,6 +1,6 @@
 {
   "t": "attestation",
   "kind": "app_attest",
-  "token": "eyJrZXlfaWQiOiJhYmMiLCJhc3NlcnRpb24iOiJ4eXoiLCJjbGllbnRfZGF0YV9oYXNoIjoiOWYyYyJ9",
-  "request_hash": "9f2c4b8e1d3a5c7f9e0b2d4f6a8c0e1f3b5d7f9a1c3e5b7d9f1a3c5e7b9d1f3a"
+  "token": "eyJrZXlfaWQiOiJkbVZqZEc5eWN5MWhjSEF0WVhSMFpYTjBMV3RsZVMxcFpDMHdNREF3TURFPSIsImFzc2VydGlvbiI6ImJtOTBJR0VnY21WaGJDQkJjSEFnUVhSMFpYTjBJR0Z6YzJWeWRHbHZiZyIsImNsaWVudF9kYXRhX2hhc2giOiIwMzYwMjc4Yzg5ZDNlZTg2MTc5ZjM0MTI0OTYwMDQ5YjFkMGZjNGY5MDljYTAyYzY4MGU1ODAxZDI5YWFjZTFjIn0",
+  "request_hash": "0360278c89d3ee86179f34124960049b1d0fc4f909ca02c680e5801d29aace1c"
 }
