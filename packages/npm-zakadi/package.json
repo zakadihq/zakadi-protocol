@@ -1,6 +1,6 @@
 {
   "name": "zakadi",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Zakadi face liveness: name-holding package with the shared protocol constants (zakadi.v1). The SDKs are published under @zakadi/*.",
   "keywords": [
     "zakadi",
