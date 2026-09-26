@@ -11,7 +11,7 @@ import base64
 import hashlib
 import json
 
-from .framing import CHAINED_TYPES, HEADER_LEN, decode_header
+from .framing import CHAINED_TYPES, HEADER_LEN, Header, decode_header, encode_message
 
 
 class ChainError(ValueError):
@@ -25,6 +25,11 @@ def b64url_decode(s: str) -> bytes:
 
 def b64url_encode(b: bytes) -> str:
     return base64.urlsafe_b64encode(b).decode("ascii").rstrip("=")
+
+
+def b64_decode(s: str) -> bytes:
+    """base64 or base64url, padding optional: the form of `ready.attest_nonce` (spec 01-protocol.md 1.5)."""
+    return b64url_decode(s.replace("+", "-").replace("/", "_").rstrip("="))
 
 
 def jti_bytes_from_token(token: str) -> bytes:
@@ -49,6 +54,21 @@ def h0(session_id: str, jti: bytes) -> bytes:
     if len(jti) != 16:
         raise ChainError("jti must be 16 bytes")
     return hashlib.sha256(session_id.encode("utf-8") + jti).digest()
+
+
+def summary_message(media: dict) -> bytes:
+    """The message a transcript media summary stands for where the transcript declares continuous
+    media: the header the summary names and a payload of `bytes - 8` zero bytes."""
+    header = Header(
+        type=media["type"],
+        seq=media["seq"],
+        pts_ms=media["pts_ms"],
+        rung=media["rung"],
+        keyframe=media.get("keyframe", False),
+        param_sets=media.get("param_sets", False),
+        rung_changed=media.get("rung_changed", False),
+    )
+    return encode_message(header, bytes(media["bytes"] - HEADER_LEN))
 
 
 def advance(state: bytes, message: bytes) -> bytes:
