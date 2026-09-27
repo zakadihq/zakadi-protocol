@@ -13,7 +13,13 @@ export function schemasDir(): string {
   return fileURLToPath(new URL("../schemas", import.meta.url));
 }
 
-/** Absolute path of the shipped `vectors/` directory. */
+/**
+ * Absolute path of the shipped `vectors/` directory. It also holds
+ * `keys/jwks.json`, the public JWKS that every `hello` and chain-case token
+ * verifies against (kid `zakadi-vectors-test-1`), which loadVectors() does not
+ * parse: a test reads it as `join(vectorsDir(), "keys", "jwks.json")`. The key
+ * is a test key, to trust in tests only.
+ */
 export function vectorsDir(): string {
   return fileURLToPath(new URL("../vectors", import.meta.url));
 }
@@ -56,6 +62,12 @@ export interface ChainCase {
   description?: string;
   session_id: string;
   jti: string;
+  /**
+   * The client token carrying `jti`: an ES256 JWS signed by the test key whose
+   * public JWKS is `keys/jwks.json` under vectorsDir() (kid
+   * `zakadi-vectors-test-1`). loadVectors() does not parse that file; a test
+   * reads it from vectorsDir() and trusts the key in tests only.
+   */
   token?: string;
   h0: string;
   messages: { hex: string; chained: boolean; chain_after: string }[];
@@ -118,7 +130,12 @@ export interface Vectors {
   sessions: Transcript[];
 }
 
-/** Parses the framing, chain, message and transcript cases under vectorsDir(). */
+/**
+ * Parses the framing, chain, message and transcript cases under vectorsDir().
+ * It leaves out `keys/jwks.json`, the public JWKS that every `hello` and
+ * chain-case token verifies against (kid `zakadi-vectors-test-1`), which a test
+ * reads from vectorsDir() and trusts in tests only.
+ */
 export function loadVectors(): Vectors {
   const root = vectorsDir();
   const read = (...path: string[]) => readFileSync(join(root, ...path), "utf8");
