@@ -13,6 +13,7 @@ Status: pre-release. Contents track the Zakadi protocol specification; nothing i
 - **Validators**, generated at build time with Ajv's standalone mode, so nothing of Ajv ships: `validateHelloMsg` and one per message type, plus `validateClientMsg` and `validateServerMsg` for the direction aggregates. Each is a type guard over a parsed JSON value; after a call, its `errors` property lists the violations, or is null. The aggregates accept known message types only, while the protocol requires unknown types to be ignored, so a client reads `t` before treating a failure as an error.
 - **`schemas/v1/` and `vectors/`**: copies of the JSON Schemas (draft 2020-12) and of the conformance vectors: framing, hash-chain, message and session-transcript cases.
 - **`@zakadi/protocol/vectors`**, for Node only: `schemasDir()` and `vectorsDir()` return the absolute paths of the shipped `schemas/` and `vectors/` directories, and `loadVectors()` parses the framing, chain, message and transcript cases for a test suite.
+- **`vectors/keys/jwks.json`**: the public JWKS every vector token verifies against. It lists one key, kid `zakadi-vectors-test-1`, which signs the `token` of each `hello` message and of each chain case as an ES256 JWS. It is a test key, to trust in tests only and never in production. `loadVectors()` does not parse the file; a test reads it from `vectorsDir()`, as `join(vectorsDir(), "keys", "jwks.json")`.
 
 ```ts
 import assert from "node:assert/strict";
