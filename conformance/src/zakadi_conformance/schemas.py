@@ -1015,7 +1015,8 @@ def chain_vector_schema() -> dict:
             "session_id": ref("sessionId"),
             "jti": ref("base64_16"),
             "token": string(
-                "A syntactically valid but unsigned JWT carrying the jti claim"
+                "An ES256 JWS carrying the jti claim, signed by the test key of "
+                "vectors/keys/jwks.json"
             ),
             "h0": ref("hex64"),
             "messages": {
