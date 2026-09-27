@@ -6,6 +6,14 @@ All notable changes to `@zakadi/protocol` are documented here. The format follow
 
 ## [Unreleased]
 
+### Fixed
+
+- `schemas/v1/chain-vector.schema.json` describes a chain case's `token` as an ES256 JWS signed
+  by the test key of `vectors/keys/jwks.json`, no longer as an unsigned JWT; the README and the
+  doc comments of `@zakadi/protocol/vectors` name that JWKS, its kid `zakadi-vectors-test-1`, its
+  test-only trust and `vectorsDir()` as where a test reads it, since `loadVectors()` does not
+  parse it.
+
 ## [0.2.0] - 2026-09-26
 
 ### Added
