@@ -6,6 +6,21 @@ All notable changes to `@zakadi/protocol` are documented here. The format follow
 
 ## [Unreleased]
 
+### Added
+
+- `vectors/loop/*.json`, ten control-loop traces of the client's 200 ms loop, and
+  `schemas/v1/loop-trace.schema.json`: per-tick queue, drain and encoded rate, server pings,
+  `set_rung`, keyframe requests and IDRs on `webcodecs`, `native` and `mediarecorder`, with the
+  rungs, the changes of decimation and the floor tick the reference loop yields from them under
+  one reading of the floor rule: it breaches on the 15th tick after the step down to rung 4, a
+  tick skipped for a keyframe request holding the count. `loadVectors()` does not parse them.
+
+### Changed
+
+- `vectors/sessions/floor-breached.jsonl`: the client's loop ticks every 200 ms from
+  `probe_result`, and `bye` `floor_breached` comes on the 15th tick after the step down to rung 4,
+  3000 ms after it rather than 3065 ms.
+
 ### Fixed
 
 - `schemas/v1/chain-vector.schema.json` describes a chain case's `token` as an ES256 JWS signed
