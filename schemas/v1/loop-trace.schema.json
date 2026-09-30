@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zakadi.dev/schemas/v1/loop-trace.schema.json",
+  "title": "A vectors/loop/*.json control-loop trace",
+  "description": "The inputs of the client control loop of spec 05 5.6, which starts at t_ms 0 at start_rung and ticks every 200 ms from t_ms 200, each input at a t_ms of its own, and what the reference loop yields from them (spec 01 1.12, D95, D130, D132).",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "profile": {
+      "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/profile"
+    },
+    "ladder": {
+      "type": "array",
+      "items": {
+        "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ladderEntry"
+      },
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "start_rung": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "ticks": {
+      "type": "array",
+      "description": "One per tick, every 200 ms from t_ms 200",
+      "items": {
+        "type": "object",
+        "properties": {
+          "t_ms": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+          },
+          "queued_bytes": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Platform queue bytes (5.6 step 1)"
+          },
+          "drained_bytes_1s": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Bytes acknowledged as sent in the last 1 s"
+          },
+          "encoded_kbps_2s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Media kbps encoded over the last 2 s, as stats.encoded_kbps"
+          }
+        },
+        "required": [
+          "t_ms",
+          "queued_bytes",
+          "drained_bytes_1s",
+          "encoded_kbps_2s"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "pings": {
+      "type": "array",
+      "description": "Server ping samples",
+      "items": {
+        "type": "object",
+        "properties": {
+          "t_ms": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+          },
+          "rtt_ms": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "integer",
+                "minimum": 0
+              }
+            ]
+          },
+          "rx_kbps": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "number",
+                "minimum": 0
+              }
+            ]
+          }
+        },
+        "required": [
+          "t_ms",
+          "rtt_ms",
+          "rx_kbps"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "set_rung": {
+      "type": "array",
+      "description": "Server set_rung messages",
+      "items": {
+        "type": "object",
+        "properties": {
+          "t_ms": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+          },
+          "rung": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          }
+        },
+        "required": [
+          "t_ms",
+          "rung"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "keyframe_requests": {
+      "type": "array",
+      "description": "Server keyframe messages",
+      "items": {
+        "type": "object",
+        "properties": {
+          "t_ms": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+          }
+        },
+        "required": [
+          "t_ms"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "idrs": {
+      "type": "array",
+      "description": "IDRs the encoder sends",
+      "items": {
+        "type": "object",
+        "properties": {
+          "t_ms": {
+            "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+          }
+        },
+        "required": [
+          "t_ms"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "expect": {
+      "type": "object",
+      "properties": {
+        "rungs": {
+          "type": "array",
+          "description": "Every rung the client announces in a rung message",
+          "items": {
+            "type": "object",
+            "properties": {
+              "t_ms": {
+                "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+              },
+              "rung": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4
+              },
+              "reason": {
+                "enum": [
+                  "backpressure",
+                  "headroom",
+                  "server"
+                ]
+              }
+            },
+            "required": [
+              "t_ms",
+              "rung",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "decimation": {
+          "type": "array",
+          "description": "Every change of decimation",
+          "items": {
+            "type": "object",
+            "properties": {
+              "t_ms": {
+                "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+              },
+              "decimation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2
+              }
+            },
+            "required": [
+              "t_ms",
+              "decimation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "floor_tick": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "https://zakadi.dev/schemas/v1/common.schema.json#/$defs/ms"
+            }
+          ],
+          "description": "The tick that sends bye floor_breached, or null"
+        }
+      },
+      "required": [
+        "rungs",
+        "decimation",
+        "floor_tick"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "name",
+    "profile",
+    "ladder",
+    "start_rung",
+    "ticks",
+    "pings",
+    "set_rung",
+    "keyframe_requests",
+    "idrs",
+    "expect"
+  ],
+  "additionalProperties": false
+}

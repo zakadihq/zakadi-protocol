@@ -11,7 +11,7 @@ from jsonschema import Draft202012Validator
 from jsonschema.protocols import Validator
 from referencing import Registry, Resource
 
-from . import SCHEMA_BASE, jws
+from . import SCHEMA_BASE, jws, loop
 from .chain import (
     Chain,
     ChainError,
@@ -62,6 +62,13 @@ LONGEST_CUE_MS = 4000  # spec 01 1.10
 # How late a turn that falls due may start: after the longest cue and the longest pause.
 TURN_SLACK_MS = LONGEST_CUE_MS + SILENCE_MS
 STREAMING_PING_MS = 1000  # spec 01 1.1: a server ping every 1 s while media streams
+FLOOR_RUNG = 4  # spec 05 5.6 step 6: the floor is rung 4 outside mediarecorder
+QUEUE_THRESHOLDS = (
+    loop.Loop.QUEUE_LOW_MS,
+    loop.Loop.QUEUE_HIGH_MS,
+    loop.Loop.QUEUE_EMERGENCY_MS,
+)
+EVENT_LISTS = ("pings", "set_rung", "keyframe_requests", "idrs")
 
 
 class Report:
@@ -777,6 +784,83 @@ def _check_continuous(
             )
 
 
+def _check_bye_last(name: str, body: list[dict], rep: Report) -> None:
+    """spec 01 1.4 `bye`, D129: bye is the client's last message."""
+    bye = next((i for i, row in enumerate(body) if _msg(row, "c2s", "bye")), None)
+    if bye is None:
+        return
+    after = next((row for row in body[bye + 1 :] if row["dir"] == "c2s"), None)
+    rep.expect(
+        after is None,
+        "%s: client line at t=%d after the client's bye (D129)"
+        % (name, after["t_ms"] if after else 0),
+    )
+
+
+def _check_floor(name: str, body: list[dict], rep: Report) -> None:
+    """spec 05 5.6 step 6, D130: the client's loop ticks every 200 ms from probe_result, and a bye
+    floor_breached comes on the 15th tick after the client's step down to rung 4 that counts, a tick
+    within 300 ms of a keyframe request counting for nothing (step 2); every stats from the first
+    counted tick on reports queue_ms above 1500. A mediarecorder client has no step down (its floor
+    is the recorder's rung); the loop traces carry that case."""
+    bye = next(
+        (
+            i
+            for i, row in enumerate(body)
+            if (m := _msg(row, "c2s", "bye")) is not None
+            and m["reason"] == "floor_breached"
+        ),
+        None,
+    )
+    if bye is None:
+        return
+    hello = next((m for row in body if (m := _msg(row, "c2s", "hello"))), None)
+    if hello is not None and hello.get("caps", {}).get("profile") == "mediarecorder":
+        return
+    t_bye = body[bye]["t_ms"]
+    origin = next(
+        (row["t_ms"] for row in body if _msg(row, "s2c", "probe_result")), None
+    )
+    steps = [
+        row["t_ms"]
+        for row in body[:bye]
+        if (m := _msg(row, "c2s", "rung")) is not None and m["rung"] == FLOOR_RUNG
+    ]
+    if origin is None or not steps:
+        rep.fail(
+            "%s: bye floor_breached at t=%d without probe_result and a step down to rung 4 before it"
+            % (name, t_bye)
+        )
+        return
+    step = steps[-1]
+    for what, t in (("the step down to rung 4", step), ("bye floor_breached", t_bye)):
+        rep.expect(
+            t > origin and (t - origin) % loop.TICK_MS == 0,
+            "%s: %s at t=%d is not on a 200 ms tick from probe_result at t=%d"
+            % (name, what, t, origin),
+        )
+    requests = [row["t_ms"] for row in body if _msg(row, "s2c", "keyframe")]
+    due, counted = step, 0
+    while counted < loop.Loop.FLOOR_TICKS:
+        due += loop.TICK_MS
+        if not any(0 <= due - r < loop.Loop.KEYFRAME_SKIP_MS for r in requests):
+            counted += 1
+    rep.expect(
+        t_bye == due,
+        "%s: bye floor_breached at t=%d, not on the 15th counted tick after the step down to "
+        "rung 4 at t=%d, which is t=%d (05 5.6 step 6, D130)"
+        % (name, t_bye, step, due),
+    )
+    for row in body[:bye]:
+        m = _msg(row, "c2s", "stats")
+        if m is not None and row["t_ms"] >= step + loop.TICK_MS:
+            rep.expect(
+                m["queue_ms"] > loop.Loop.QUEUE_EMERGENCY_MS,
+                "%s: stats at t=%d reports queue_ms %s, not above 1500, between the step down to "
+                "rung 4 and bye floor_breached" % (name, row["t_ms"], m["queue_ms"]),
+            )
+
+
 def check_transcripts(
     root: Path, schemas: dict, registry: Registry, keys: dict, rep: Report
 ) -> None:
@@ -952,8 +1036,73 @@ def check_transcripts(
         _check_pairs(name, body, rep)
         _check_silence(name, body, rep)
         _check_framing_cap(name, body, rep)
+        _check_bye_last(name, body, rep)
+        _check_floor(name, body, rep)
         if expect.get("media") == "continuous":
             _check_continuous(name, meta, body, ready, rep)
+
+
+def _increasing(values: list[int]) -> bool:
+    return all(a < b for a, b in zip(values, values[1:]))
+
+
+def check_loop(root: Path, schemas: dict, registry: Registry, rep: Report) -> None:
+    """The control-loop traces (spec 01 1.12, 05 5.6, 5.16): each matches its schema, ticks every
+    200 ms from t_ms 200 with every other input in order at a t_ms of its own, expects what the
+    reference loop yields from its inputs, ends at its floor tick when it has one (D129), and keeps
+    every tick's queue_ms 1 ms or more off 150, 600 and 1500."""
+    vschema = validator(schemas, registry, "loop-trace.schema.json")
+    files = sorted((root / "vectors" / "loop").glob("*.json"))
+    rep.expect(bool(files), "no control-loop traces under vectors/loop")
+    for f in files:
+        label = "loop trace " + f.stem
+        trace = json.loads(f.read_text(encoding="ascii"))
+        errs = list(vschema.iter_errors(trace))
+        rep.expect(
+            not errs,
+            "%s does not match its schema: %s"
+            % (label, errs[0].message if errs else ""),
+        )
+        if errs:
+            continue
+        rep.expect(
+            trace["name"] == f.stem,
+            "%s: name %s differs from the file name" % (label, trace["name"]),
+        )
+        rep.expect(
+            [entry["rung"] for entry in trace["ladder"]] == list(range(5)),
+            "%s: the ladder is not rungs 0 to 4 in order" % label,
+        )
+        ticks = [tk["t_ms"] for tk in trace["ticks"]]
+        rep.expect(
+            ticks == [loop.TICK_MS * (i + 1) for i in range(len(ticks))],
+            "%s: ticks are not every 200 ms from t_ms 200" % label,
+        )
+        events = [[e["t_ms"] for e in trace[key]] for key in EVENT_LISTS]
+        times = ticks + [t for ts in events for t in ts]
+        rep.expect(
+            len(set(times)) == len(times) and all(_increasing(ts) for ts in events),
+            "%s: two inputs share a t_ms, or a list is out of t_ms order" % label,
+        )
+        got = loop.replay(trace)
+        for key in ("rungs", "decimation", "floor_tick"):
+            rep.expect(
+                trace["expect"][key] == got.expect[key],
+                "%s: expect.%s differs from the reference loop's %s"
+                % (label, key, json.dumps(got.expect[key])),
+            )
+        floor = got.expect["floor_tick"]
+        rep.expect(
+            floor is None or ticks[-1] == floor,
+            "%s: ticks after the floor tick at t_ms %s" % (label, floor),
+        )
+        near = [
+            "queue_ms %s at t_ms %d is within 1 ms of %d" % (q, t, limit)
+            for t, q in got.queue_ms
+            for limit in QUEUE_THRESHOLDS
+            if abs(q - limit) < 1
+        ]
+        rep.expect(not near, "%s: %s" % (label, near[0] if near else ""))
 
 
 def run_checks(root: Path) -> Report:
@@ -968,4 +1117,5 @@ def run_checks(root: Path) -> Report:
     check_framing(root, schemas, registry, rep)
     check_chain(root, schemas, registry, keys, rep)
     check_transcripts(root, schemas, registry, keys, rep)
+    check_loop(root, schemas, registry, rep)
     return rep

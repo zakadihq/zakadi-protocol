@@ -1,5 +1,5 @@
 """The checker fails a generated tree that breaks a rule of the vectors (spec 01-protocol.md 1.1, 1.4,
-1.6, 1.12, 02-api.md 2.2, 03-backend-services.md 3.3, 3.4)."""
+1.6, 1.12, 02-api.md 2.2, 03-backend-services.md 3.3, 3.4, 05-sdk-contract.md 5.6, D129, D130)."""
 
 import json
 import shutil
@@ -48,6 +48,19 @@ def edit(path: Path, change) -> None:
     lines = rows(path)
     change(lines)
     write(path, lines)
+
+
+def resort(lines: list[dict]) -> None:
+    """Restores t_ms order after the meta line, keeping the order of lines at equal t_ms."""
+    lines[1:] = sorted(lines[1:], key=lambda r: r["t_ms"])
+
+
+def shift(lines: list[dict], at: int, by: int) -> None:
+    """Moves every line from t_ms at on by `by` ms."""
+    for r in lines[1:]:
+        if r["t_ms"] >= at:
+            r["t_ms"] += by
+    resort(lines)
 
 
 def failures(root: Path) -> list[str]:
@@ -310,7 +323,7 @@ def test_attempts_exhausted_before_the_cap_and_15_s_more_fails(tree):
 
     edit(path, exhausted_early)
     fails_with(
-        tree, "floor-breached.jsonl: attempts_exhausted at t=5700, before 15 s past"
+        tree, "floor-breached.jsonl: attempts_exhausted at t=5610, before 15 s past"
     )
 
 
@@ -347,4 +360,112 @@ def test_an_attestation_whose_hash_differs_fails(tree):
     fails_with(tree, "attestation/valid.json: request_hash is not SHA-256")
     fails_with(
         tree, "attestation/valid-1.json: the App Attest client_data_hash differs"
+    )
+
+
+def test_floor_breached_says_bye_on_the_15th_tick_after_its_step_down_to_rung_4(
+    generated,
+):
+    lines = rows(transcript(generated, "floor-breached"))
+    origin = lines[index(lines, "probe_result")]["t_ms"]
+    step = lines[index(lines, "rung", rung=4)]["t_ms"]
+    bye = lines[index(lines, "bye", reason="floor_breached")]["t_ms"]
+    assert (step - origin) % 200 == 0 and bye - step == 15 * 200
+
+
+@pytest.mark.parametrize(
+    "by,want",
+    [
+        # v0.2.0's bye, 3065 ms after the step
+        (65, "bye floor_breached at t=5585 is not on a 200 ms tick from probe_result"),
+        (
+            65,
+            "bye floor_breached at t=5585, not on the 15th counted tick after the step",
+        ),
+        (-200, "bye floor_breached at t=5320, not on the 15th counted tick"),
+        (200, "bye floor_breached at t=5720, not on the 15th counted tick"),
+    ],
+)
+def test_a_floor_breached_bye_off_the_15th_tick_after_the_step_fails(tree, by, want):
+    path = transcript(tree, "floor-breached")
+    edit(path, lambda lines: shift(lines, 5520, by))
+    fails_with(tree, "floor-breached.jsonl: " + want)
+
+
+def test_a_tick_skipped_for_a_keyframe_request_holds_the_floor_count(tree):
+    path = transcript(tree, "floor-breached")
+    keyframe = {
+        "t_ms": 3150,
+        "dir": "s2c",
+        "msg": {"t": "keyframe", "id": "k1", "reason": "recovery"},
+    }
+
+    def request_keyframe(lines):
+        lines.append(keyframe)
+        resort(lines)
+
+    edit(path, request_keyframe)
+    fails_with(
+        tree,
+        "floor-breached.jsonl: bye floor_breached at t=5520, not on the 15th counted tick after "
+        "the step down to rung 4 at t=2520, which is t=5720",
+    )
+    edit(path, lambda lines: shift(lines, 5520, 200))
+    assert failures(tree) == []
+
+
+def test_a_stats_not_above_1500_ms_after_the_step_down_to_rung_4_fails(tree):
+    path = transcript(tree, "floor-breached")
+    edit(
+        path,
+        lambda lines: lines[index(lines, "stats", queue_ms=2400)]["msg"].update(
+            queue_ms=1400
+        ),
+    )
+    fails_with(
+        tree,
+        "floor-breached.jsonl: stats at t=3040 reports queue_ms 1400, not above 1500",
+    )
+
+
+def test_a_floor_breached_bye_without_a_step_down_to_rung_4_fails(tree):
+    path = transcript(tree, "floor-breached")
+    edit(path, lambda lines: lines[index(lines, "rung", rung=4)]["msg"].update(rung=3))
+    fails_with(
+        tree,
+        "floor-breached.jsonl: bye floor_breached at t=5520 without probe_result and a step down",
+    )
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        {
+            "t_ms": 8150,
+            "dir": "c2s",
+            "msg": {
+                "t": "attest",
+                "video_seq": 113,
+                "audio_seq": 379,
+                "chain": "5e0b1c4a8d7f2e3a9c6b0d4e1f8a7c2b3d5e6f7a8b9c0d1e2f3a4b5c6d7e8f90",
+            },
+        },
+        {
+            "t_ms": 8150,
+            "dir": "c2s",
+            "media": {"type": 1, "seq": 379, "pts_ms": 7610, "rung": 2, "bytes": 68},
+        },
+    ],
+    ids=["message", "media"],
+)
+def test_a_client_line_after_the_clients_bye_fails(tree, line):
+    path = transcript(tree, "user-cancel")
+
+    def add(lines):
+        lines.append(line)
+        resort(lines)
+
+    edit(path, add)
+    fails_with(
+        tree, "user-cancel.jsonl: client line at t=8150 after the client's bye (D129)"
     )

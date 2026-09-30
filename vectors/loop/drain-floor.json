@@ -1,0 +1,225 @@
+{
+  "name": "drain-floor",
+  "description": "Step 1's drain floor: queue_ms divides the queue by the bytes drained in the last second, floored at half the rung's video rate. The socket stalls at t_ms 1200 and drains nothing, then 6000 bytes a second, less than any floor: 10000 bytes read 400 ms at rung 2 and 16000 read 640 ms, so the second tick of those steps down to rung 3 at 2400; there 10000 bytes read 640 ms and the loop steps down again at 3400, once its 1 s guard has passed; at rung 4 they read 1067 ms. Unfloored, the stall would read as a queue without bound and step down to rung 4 at 1200.",
+  "profile": "webcodecs",
+  "ladder": [
+    {
+      "rung": 0,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 900,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 1,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 600,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 2,
+      "w": 480,
+      "h": 640,
+      "fps": 15,
+      "video_kbps": 400,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 3,
+      "w": 336,
+      "h": 448,
+      "fps": 12,
+      "video_kbps": 250,
+      "audio_kbps": 16
+    },
+    {
+      "rung": 4,
+      "w": 288,
+      "h": 384,
+      "fps": 10,
+      "video_kbps": 150,
+      "audio_kbps": 12
+    }
+  ],
+  "start_rung": 2,
+  "ticks": [
+    {
+      "t_ms": 200,
+      "queued_bytes": 15000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 400,
+      "queued_bytes": 15000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 600,
+      "queued_bytes": 15000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 800,
+      "queued_bytes": 15000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1000,
+      "queued_bytes": 15000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1200,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 0,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1400,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 0,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1600,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 0,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1800,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 0,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2000,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 0,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2200,
+      "queued_bytes": 16000,
+      "drained_bytes_1s": 0,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2400,
+      "queued_bytes": 16000,
+      "drained_bytes_1s": 0,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2600,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 330
+    },
+    {
+      "t_ms": 2800,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 330
+    },
+    {
+      "t_ms": 3000,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 330
+    },
+    {
+      "t_ms": 3200,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 330
+    },
+    {
+      "t_ms": 3400,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 330
+    },
+    {
+      "t_ms": 3600,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 200
+    },
+    {
+      "t_ms": 3800,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 200
+    },
+    {
+      "t_ms": 4000,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 200
+    },
+    {
+      "t_ms": 4200,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 200
+    },
+    {
+      "t_ms": 4400,
+      "queued_bytes": 10000,
+      "drained_bytes_1s": 6000,
+      "encoded_kbps_2s": 200
+    },
+    {
+      "t_ms": 4600,
+      "queued_bytes": 1000,
+      "drained_bytes_1s": 30000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 4800,
+      "queued_bytes": 1000,
+      "drained_bytes_1s": 30000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 5000,
+      "queued_bytes": 1000,
+      "drained_bytes_1s": 30000,
+      "encoded_kbps_2s": 162
+    }
+  ],
+  "pings": [],
+  "set_rung": [],
+  "keyframe_requests": [],
+  "idrs": [],
+  "expect": {
+    "rungs": [
+      {
+        "t_ms": 2400,
+        "rung": 3,
+        "reason": "backpressure"
+      },
+      {
+        "t_ms": 3400,
+        "rung": 4,
+        "reason": "backpressure"
+      }
+    ],
+    "decimation": [
+      {
+        "t_ms": 2400,
+        "decimation": 1
+      }
+    ],
+    "floor_tick": null
+  }
+}

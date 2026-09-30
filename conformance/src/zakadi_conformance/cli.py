@@ -28,7 +28,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     sub.add_parser(
         "check",
-        help="validate schemas, message vectors, framing vectors, chain vectors and transcripts",
+        help="validate schemas, message vectors, framing vectors, chain vectors, transcripts "
+        "and control-loop traces",
     )
     args = parser.parse_args(argv)
     if args.command == "generate":

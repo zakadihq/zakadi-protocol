@@ -18,6 +18,7 @@ from typing import Any, cast
 
 from . import jws
 from .chain import Chain, b64_decode, b64url_decode, b64url_encode, summary_message
+from .loop import TICK_MS, Loop
 
 # `ses_` and a ULID (26 Crockford base32 characters) whose time part is ISSUED_AT in ms.
 SESSION_ID = "ses_01K5RMQ2G0VECT0R0000000001"
@@ -1189,10 +1190,15 @@ def transcript_digits_retry() -> list[dict]:
 
 
 def transcript_floor_breached() -> list[dict]:
+    """The uplink collapses. The client's loop ticks every 200 ms from probe_result (05 5.6): its 5th
+    tick steps down to rung 3 and its 10th to rung 4, where queue_ms stays above 1500, and the 15th tick
+    after that step, the 25th, sends bye floor_breached (D130), the client's last message (D129)."""
     lines = [
         _meta(
             "floor-breached",
-            "The uplink collapses; the client steps down to rung 4, cannot sustain it for 3 s, and ends with bye floor_breached.",
+            "The uplink collapses; the client's control loop, ticking every 200 ms from probe_result, steps down "
+            "to rung 3 and then to rung 4, where queue_ms stays above 1500, and on the 15th tick after that step "
+            "(3 s) ends with bye floor_breached.",
             {
                 "end": {"outcome": "aborted", "reason": "floor_breached"},
                 "close": 1000,
@@ -1202,28 +1208,70 @@ def transcript_floor_breached() -> list[dict]:
     ]
     _setup(lines)
     d = _Dialogue(lines)
+
+    def tick(k: int) -> int:
+        return FRAMING_START + TICK_MS * k
+
+    to_rung_4 = tick(10)
+    floor = to_rung_4 + Loop.FLOOR_TICKS * TICK_MS
     lines.append(_line(560, "s2c", _framing_ui("Hi.", "wave")))
     d.say(562, "greet.short")
     lines.append(_stats(1040, 420, queued_bytes=60000, queue_ms=700, enc_queue=2))
     lines.append(
         _line(
-            1440,
+            tick(5),
             "c2s",
             {
                 "t": "rung",
                 "rung": 3,
                 "reason": "backpressure",
-                "from_video_seq": 14,
-                "from_audio_seq": 45,
+                "from_video_seq": 15,
+                "from_audio_seq": 50,
             },
         )
     )
-    lines.append(_line(1445, "c2s", config_at(3)))
+    lines.append(_line(tick(5) + 5, "c2s", config_at(3)))
     lines.append(
         _media(
-            1460, 0, 14, 920, 3, 2100, rung_changed=True, keyframe=True, param_sets=True
+            tick(5) + 20,
+            0,
+            15,
+            1000,
+            3,
+            2100,
+            rung_changed=True,
+            keyframe=True,
+            param_sets=True,
         )
     )
+    lines.append(
+        _line(
+            to_rung_4,
+            "c2s",
+            {
+                "t": "rung",
+                "rung": 4,
+                "reason": "backpressure",
+                "from_video_seq": 27,
+                "from_audio_seq": 100,
+            },
+        )
+    )
+    lines.append(_line(to_rung_4 + 5, "c2s", config_at(4)))
+    lines.append(
+        _media(
+            to_rung_4 + 20,
+            0,
+            27,
+            2000,
+            4,
+            1500,
+            rung_changed=True,
+            keyframe=True,
+            param_sets=True,
+        )
+    )
+    # the queue_ms of the step's own tick, measured at rung 3
     lines.append(
         _stats(
             2540,
@@ -1236,36 +1284,9 @@ def transcript_floor_breached() -> list[dict]:
             rtt_ms=410,
         )
     )
-    lines.append(
-        _line(
-            2545,
-            "c2s",
-            {
-                "t": "rung",
-                "rung": 4,
-                "reason": "backpressure",
-                "from_video_seq": 27,
-                "from_audio_seq": 100,
-            },
-        )
-    )
-    lines.append(_line(2550, "c2s", config_at(4)))
-    lines.append(
-        _media(
-            2560,
-            0,
-            27,
-            2020,
-            4,
-            1500,
-            rung_changed=True,
-            keyframe=True,
-            param_sets=True,
-        )
-    )
     d.say(2600, "frame.arm_length")
-    d.then("hold.moment", 150)
-    for t in (3040, 3540, 4040, 4540, 5040, 5540):
+    d.then("hold.moment", 100)
+    for t in range(3040, floor, 500):
         lines.append(
             _stats(
                 t,
@@ -1278,10 +1299,10 @@ def transcript_floor_breached() -> list[dict]:
                 rtt_ms=900,
             )
         )
-    lines.append(_attest(5600, 52, 250))
+    lines.append(_attest(floor, 56, 249))
     lines.append(
         _line(
-            5610,
+            floor,
             "c2s",
             {
                 "t": "bye",
@@ -1292,7 +1313,7 @@ def transcript_floor_breached() -> list[dict]:
     )
     lines.append(
         _line(
-            5700,
+            floor + 90,
             "s2c",
             {
                 "t": "end",
@@ -1302,7 +1323,7 @@ def transcript_floor_breached() -> list[dict]:
             },
         )
     )
-    lines.append(_close(5720, 1000))
+    lines.append(_close(floor + 110, 1000))
     return lines
 
 
@@ -1818,3 +1839,280 @@ TRANSCRIPTS = {
     "protocol-error": transcript_protocol_error,
     "framing-timeout": transcript_framing_timeout,
 }
+
+
+# Control-loop traces (spec 05-sdk-contract.md 5.6, 01-protocol.md 1.12, D95, D130, D132): the inputs of
+# the client's 200 ms loop, which starts at t_ms 0 at the start rung and ticks from t_ms 200. The
+# expectations are the reference loop's (`loop.replay`), written by `vectors.loop_traces`. Every input
+# other than a tick sits off the tick grid at a t_ms of its own, so the order of inputs is never in doubt.
+# A rung's media rate, video and audio, is its encoded_kbps_2s once the encoder has settled there.
+MEDIA_KBPS = [entry["video_kbps"] + entry["audio_kbps"] for entry in LADDER]
+
+
+def _ticks(*runs: tuple[int, int, int, float]) -> list[dict]:
+    """Ticks every 200 ms from t_ms 200, from runs of (count, queued_bytes, drained_bytes_1s,
+    encoded_kbps_2s)."""
+    ticks: list[dict] = []
+    for count, queued, drained, encoded in runs:
+        for _ in range(count):
+            ticks.append(
+                {
+                    "t_ms": 200 * (len(ticks) + 1),
+                    "queued_bytes": queued,
+                    "drained_bytes_1s": drained,
+                    "encoded_kbps_2s": encoded,
+                }
+            )
+    return ticks
+
+
+def _pings(
+    samples: list[tuple[int | None, float | None]], first: int = 100
+) -> list[dict]:
+    """Server pings every 1 s from t_ms first, each (rtt_ms, rx_kbps)."""
+    return [
+        {"t_ms": first + 1000 * i, "rtt_ms": rtt, "rx_kbps": rx}
+        for i, (rtt, rx) in enumerate(samples)
+    ]
+
+
+def _loop_trace(
+    name: str,
+    description: str,
+    profile: str,
+    start_rung: int,
+    ticks: list[dict],
+    pings: list[dict] | None = None,
+    set_rung: list[tuple[int, int]] | None = None,
+    keyframe_requests: list[int] | None = None,
+    idrs: list[int] | None = None,
+) -> dict:
+    return {
+        "name": name,
+        "description": description,
+        "profile": profile,
+        "ladder": LADDER,
+        "start_rung": start_rung,
+        "ticks": ticks,
+        "pings": pings or [],
+        "set_rung": [{"t_ms": t, "rung": r} for t, r in set_rung or []],
+        "keyframe_requests": [{"t_ms": t} for t in keyframe_requests or []],
+        "idrs": [{"t_ms": t} for t in idrs or []],
+    }
+
+
+def loop_drain_floor() -> dict:
+    return _loop_trace(
+        "drain-floor",
+        "Step 1's drain floor: queue_ms divides the queue by the bytes drained in the last second, floored "
+        "at half the rung's video rate. The socket stalls at t_ms 1200 and drains nothing, then 6000 bytes "
+        "a second, less than any floor: 10000 bytes read 400 ms at rung 2 and 16000 read 640 ms, so the "
+        "second tick of those steps down to rung 3 at 2400; there 10000 bytes read 640 ms and the loop "
+        "steps down again at 3400, once its 1 s guard has passed; at rung 4 they read 1067 ms. Unfloored, "
+        "the stall would read as a queue without bound and step down to rung 4 at 1200.",
+        "webcodecs",
+        2,
+        _ticks(
+            (5, 15000, 50000, MEDIA_KBPS[2]),
+            (5, 10000, 0, MEDIA_KBPS[2]),
+            (2, 16000, 0, MEDIA_KBPS[2]),
+            (5, 10000, 6000, 330),
+            (5, 10000, 6000, 200),
+            (3, 1000, 30000, MEDIA_KBPS[4]),
+        ),
+    )
+
+
+def loop_rx_signal() -> dict:
+    return _loop_trace(
+        "rx-signal",
+        "Step 1's first secondary signal: queue_ms reads 300 throughout, but from t_ms 2100 the server "
+        "receives 150 kbps of the 424 the client encodes. That counts as queue_ms above 600 once it has "
+        "held for 2 s, so the ticks at 4200 and 4400 count and the second steps down to rung 3. The timer "
+        "restarts there, and the samples from 5100 have held for 2 s by 7200, so the next step comes at "
+        "7400, not at 5400. Each sample is tested on every tick against that tick's encoded rate: the "
+        "410 kbps received at 1100, while the encoder overshot to 520, is not low at the ticks after the "
+        "overshoot; tested when it arrived, it would have started the timer and the first step would "
+        "have come at 3400.",
+        "native",
+        2,
+        _ticks(
+            (3, 15000, 50000, MEDIA_KBPS[2]),
+            (2, 15000, 50000, 520),
+            (17, 15000, 50000, MEDIA_KBPS[2]),
+            (1, 15000, 50000, 390),
+            (1, 15000, 50000, 350),
+            (1, 15000, 50000, 310),
+            (1, 15000, 50000, 280),
+            (11, 15000, 50000, MEDIA_KBPS[3]),
+            (5, 15000, 50000, MEDIA_KBPS[4]),
+        ),
+        pings=_pings([(190, 410), (190, 410)] + [(190, 150)] * 7),
+    )
+
+
+def loop_rtt_signal() -> dict:
+    return _loop_trace(
+        "rtt-signal",
+        "Step 1's second secondary signal: queue_ms reads 300 throughout, and from t_ms 6100 the RTT is "
+        "900 ms, above twice the session median of 190. That counts as queue_ms above 600 once it has held "
+        "for 2 s, so the ticks at 8200 and 8400 count and the second steps down to rung 3. The timer "
+        "restarts there; before new samples have held for 2 s, the 900 ms samples are half of the session "
+        "and the median is 900, so nothing more counts, where a timer that ran on would have stepped down "
+        "again at 9400.",
+        "native",
+        2,
+        _ticks(
+            (42, 15000, 50000, MEDIA_KBPS[2]),
+            (20, 15000, 50000, MEDIA_KBPS[3]),
+        ),
+        pings=_pings([(190, 410)] * 6 + [(900, 410)] * 3 + [(900, 260)] * 4),
+    )
+
+
+def loop_keyframe_skip() -> dict:
+    return _loop_trace(
+        "keyframe-skip",
+        "Step 2: a tick within 300 ms of a keyframe request is skipped and holds every count. The request "
+        "at t_ms 850 skips the tick at 1000, so queue_ms above 600 reaches its second tick at 1200, which "
+        "steps down to rung 3; the one at 1990 skips the ticks at 2000 and 2200, so the emergency rule "
+        "waits for 2400 and steps down to rung 4; the one at 3050 skips the tick at 3200, so the floor "
+        "breaches on the 16th tick after the step, at 5600.",
+        "webcodecs",
+        2,
+        _ticks(
+            (3, 15000, 50000, MEDIA_KBPS[2]),
+            (3, 35000, 50000, MEDIA_KBPS[2]),
+            (3, 15000, 50000, MEDIA_KBPS[3]),
+            (3, 80000, 50000, MEDIA_KBPS[3]),
+            (16, 100000, 50000, MEDIA_KBPS[4]),
+        ),
+        keyframe_requests=[850, 1990, 3050],
+        idrs=[900, 2040, 3150],
+    )
+
+
+def loop_two_tick_guard() -> dict:
+    return _loop_trace(
+        "two-tick-guard",
+        "Step 3's two-tick rule and the guards of D33: queue_ms above 600 on two ticks steps down one rung, "
+        "at t_ms 400; for 1 s after a downshift no further one comes while the count runs on, so the next "
+        "is at 1400. queue_ms rises above 1500 at 1600, and the emergency rule waits only 600 ms after the "
+        "downshift: at 2000 it steps down two rungs, to rung 4.",
+        "webcodecs",
+        0,
+        _ticks(
+            (2, 70000, 100000, MEDIA_KBPS[0]),
+            (5, 70000, 100000, MEDIA_KBPS[1]),
+            (3, 160000, 100000, MEDIA_KBPS[2]),
+            (3, 30000, 100000, MEDIA_KBPS[4]),
+        ),
+    )
+
+
+def loop_emergency_guard() -> dict:
+    return _loop_trace(
+        "emergency-guard",
+        "Step 3's emergency rule and its guard of D33: queue_ms above 1500 steps down two rungs with "
+        "decimation 2 at t_ms 200, and fires again only 600 ms after that downshift, at 800, reaching "
+        "rung 4.",
+        "webcodecs",
+        0,
+        _ticks(
+            (4, 160000, 100000, MEDIA_KBPS[0]),
+            (3, 30000, 100000, MEDIA_KBPS[4]),
+        ),
+    )
+
+
+def loop_upshift() -> dict:
+    return _loop_trace(
+        "upshift",
+        "Step 3's upshift: queue_ms below 150, the latest RTT within 20 percent of the median of the last "
+        "5 s over three samples or more (D132), 3 s at the rung and the last IDR sent more than 1 s ago. "
+        "The RTT is measured from t_ms 2100, so at 3600 two samples do not suffice and the upshift waits "
+        "for the third, at 4200, clearing decimation. The RTT of 250 ms at 7100 holds the next upshift, "
+        "the keyframe request at 7950 skips two ticks and its IDR at 8050 holds it until 9200.",
+        "webcodecs",
+        2,
+        _ticks(
+            (2, 35000, 50000, MEDIA_KBPS[2]),
+            (19, 3000, 50000, MEDIA_KBPS[3]),
+            (27, 3000, 50000, MEDIA_KBPS[2]),
+        ),
+        pings=_pings(
+            [(None, None)] * 2 + [(190, None)] * 5 + [(250, None)] + [(190, None)] * 2
+        ),
+        keyframe_requests=[7950],
+        idrs=[450, 2450, 4250, 6250, 8050],
+    )
+
+
+def loop_set_rung_override() -> dict:
+    return _loop_trace(
+        "set-rung-override",
+        "A set_rung overrides the loop for 3 s (D132): the server's rung 1 at t_ms 1150 is an upshift and "
+        "clears decimation; queue_ms is above 600 from 1200, and above 1500 at 2400 and 2600, but step 3 "
+        "changes nothing until the override ends at 4150 while its count runs on, so the tick at 4200 "
+        "steps down at once. The server's rung 3 at 5350 keeps decimation.",
+        "webcodecs",
+        2,
+        _ticks(
+            (2, 35000, 50000, MEDIA_KBPS[2]),
+            (3, 15000, 50000, MEDIA_KBPS[3]),
+            (6, 35000, 50000, 500),
+            (2, 80000, 50000, 600),
+            (8, 35000, 50000, MEDIA_KBPS[1]),
+            (5, 15000, 50000, MEDIA_KBPS[2]),
+            (4, 15000, 50000, MEDIA_KBPS[3]),
+        ),
+        set_rung=[(1150, 1), (5350, 3)],
+    )
+
+
+def loop_floor_webcodecs() -> dict:
+    return _loop_trace(
+        "floor-webcodecs",
+        "Step 6 on webcodecs (D130): the emergency rule steps down to rung 4 at t_ms 400, and queue_ms "
+        "stays above 1500 on every later tick. The step's own tick measured rung 2's backlog and does not "
+        "count; the 15th tick after it, at 3400, breaches the floor.",
+        "webcodecs",
+        2,
+        _ticks(
+            (1, 17500, 25000, MEDIA_KBPS[2]),
+            (1, 40000, 25000, MEDIA_KBPS[2]),
+            (15, 40000, 20000, MEDIA_KBPS[4]),
+        ),
+    )
+
+
+def loop_floor_mediarecorder() -> dict:
+    return _loop_trace(
+        "floor-mediarecorder",
+        "Step 6 on mediarecorder: the rung cannot change, so the recorder's rung 2 is the floor, and the "
+        "15th tick in a row with queue_ms above 1500 breaches it, at t_ms 3600; decimation follows step 3 "
+        "as on the other profiles. The keyframe request at 1250 is ignored (01 1.5) and skips no tick; the "
+        "set_rung at 2150 is answered with the unchanged rung, and the count runs on through its override.",
+        "mediarecorder",
+        2,
+        _ticks(
+            (3, 15000, 50000, MEDIA_KBPS[2]),
+            (15, 50000, 25000, MEDIA_KBPS[2]),
+        ),
+        set_rung=[(2150, 3)],
+        keyframe_requests=[1250],
+    )
+
+
+LOOP_TRACES = (
+    loop_drain_floor,
+    loop_rx_signal,
+    loop_rtt_signal,
+    loop_keyframe_skip,
+    loop_two_tick_guard,
+    loop_emergency_guard,
+    loop_upshift,
+    loop_set_rung_override,
+    loop_floor_webcodecs,
+    loop_floor_mediarecorder,
+)

@@ -1,0 +1,187 @@
+{
+  "name": "floor-mediarecorder",
+  "description": "Step 6 on mediarecorder: the rung cannot change, so the recorder's rung 2 is the floor, and the 15th tick in a row with queue_ms above 1500 breaches it, at t_ms 3600; decimation follows step 3 as on the other profiles. The keyframe request at 1250 is ignored (01 1.5) and skips no tick; the set_rung at 2150 is answered with the unchanged rung, and the count runs on through its override.",
+  "profile": "mediarecorder",
+  "ladder": [
+    {
+      "rung": 0,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 900,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 1,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 600,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 2,
+      "w": 480,
+      "h": 640,
+      "fps": 15,
+      "video_kbps": 400,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 3,
+      "w": 336,
+      "h": 448,
+      "fps": 12,
+      "video_kbps": 250,
+      "audio_kbps": 16
+    },
+    {
+      "rung": 4,
+      "w": 288,
+      "h": 384,
+      "fps": 10,
+      "video_kbps": 150,
+      "audio_kbps": 12
+    }
+  ],
+  "start_rung": 2,
+  "ticks": [
+    {
+      "t_ms": 200,
+      "queued_bytes": 15000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 400,
+      "queued_bytes": 15000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 600,
+      "queued_bytes": 15000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 800,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1000,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1200,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1400,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1600,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1800,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2000,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2200,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2400,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2600,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2800,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 3000,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 3200,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 3400,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 3600,
+      "queued_bytes": 50000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    }
+  ],
+  "pings": [],
+  "set_rung": [
+    {
+      "t_ms": 2150,
+      "rung": 3
+    }
+  ],
+  "keyframe_requests": [
+    {
+      "t_ms": 1250
+    }
+  ],
+  "idrs": [],
+  "expect": {
+    "rungs": [
+      {
+        "t_ms": 2150,
+        "rung": 2,
+        "reason": "server"
+      }
+    ],
+    "decimation": [
+      {
+        "t_ms": 800,
+        "decimation": 2
+      }
+    ],
+    "floor_tick": 3600
+  }
+}

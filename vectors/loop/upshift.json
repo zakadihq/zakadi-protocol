@@ -1,0 +1,443 @@
+{
+  "name": "upshift",
+  "description": "Step 3's upshift: queue_ms below 150, the latest RTT within 20 percent of the median of the last 5 s over three samples or more (D132), 3 s at the rung and the last IDR sent more than 1 s ago. The RTT is measured from t_ms 2100, so at 3600 two samples do not suffice and the upshift waits for the third, at 4200, clearing decimation. The RTT of 250 ms at 7100 holds the next upshift, the keyframe request at 7950 skips two ticks and its IDR at 8050 holds it until 9200.",
+  "profile": "webcodecs",
+  "ladder": [
+    {
+      "rung": 0,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 900,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 1,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 600,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 2,
+      "w": 480,
+      "h": 640,
+      "fps": 15,
+      "video_kbps": 400,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 3,
+      "w": 336,
+      "h": 448,
+      "fps": 12,
+      "video_kbps": 250,
+      "audio_kbps": 16
+    },
+    {
+      "rung": 4,
+      "w": 288,
+      "h": 384,
+      "fps": 10,
+      "video_kbps": 150,
+      "audio_kbps": 12
+    }
+  ],
+  "start_rung": 2,
+  "ticks": [
+    {
+      "t_ms": 200,
+      "queued_bytes": 35000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 400,
+      "queued_bytes": 35000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 1000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 1200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 1400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 1600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 1800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 2000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 2200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 2400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 2600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 2800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 3000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 3200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 3400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 3600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 3800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 4000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 4200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 266
+    },
+    {
+      "t_ms": 4400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 4600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 4800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 5000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 5200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 5400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 5600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 5800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 6000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 6200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 6400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 6600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 6800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 7000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 7200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 7400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 7600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 7800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 8000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 8200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 8400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 8600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 8800,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 9000,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 9200,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 9400,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 9600,
+      "queued_bytes": 3000,
+      "drained_bytes_1s": 50000,
+      "encoded_kbps_2s": 424
+    }
+  ],
+  "pings": [
+    {
+      "t_ms": 100,
+      "rtt_ms": null,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 1100,
+      "rtt_ms": null,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 2100,
+      "rtt_ms": 190,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 3100,
+      "rtt_ms": 190,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 4100,
+      "rtt_ms": 190,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 5100,
+      "rtt_ms": 190,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 6100,
+      "rtt_ms": 190,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 7100,
+      "rtt_ms": 250,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 8100,
+      "rtt_ms": 190,
+      "rx_kbps": null
+    },
+    {
+      "t_ms": 9100,
+      "rtt_ms": 190,
+      "rx_kbps": null
+    }
+  ],
+  "set_rung": [],
+  "keyframe_requests": [
+    {
+      "t_ms": 7950
+    }
+  ],
+  "idrs": [
+    {
+      "t_ms": 450
+    },
+    {
+      "t_ms": 2450
+    },
+    {
+      "t_ms": 4250
+    },
+    {
+      "t_ms": 6250
+    },
+    {
+      "t_ms": 8050
+    }
+  ],
+  "expect": {
+    "rungs": [
+      {
+        "t_ms": 400,
+        "rung": 3,
+        "reason": "backpressure"
+      },
+      {
+        "t_ms": 4200,
+        "rung": 2,
+        "reason": "headroom"
+      },
+      {
+        "t_ms": 9200,
+        "rung": 1,
+        "reason": "headroom"
+      }
+    ],
+    "decimation": [
+      {
+        "t_ms": 400,
+        "decimation": 1
+      },
+      {
+        "t_ms": 4200,
+        "decimation": 0
+      }
+    ],
+    "floor_tick": null
+  }
+}

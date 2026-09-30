@@ -7,7 +7,7 @@ import json
 import struct
 from pathlib import Path
 
-from . import examples, jws
+from . import examples, jws, loop
 from .chain import Chain, b64url_decode, h0
 from .framing import Header, build_audio_batch, encode_message
 from .schemas import all_schemas
@@ -357,6 +357,22 @@ def write_transcripts(root: Path) -> None:
         )
 
 
+def loop_traces() -> list[dict]:
+    """The control-loop traces: the inputs of examples.LOOP_TRACES and what the reference loop yields
+    from them (spec 05 5.6, 01 1.12)."""
+    traces = []
+    for build in examples.LOOP_TRACES:
+        trace = build()
+        trace["expect"] = loop.replay(trace).expect
+        traces.append(trace)
+    return traces
+
+
+def write_loop_traces(root: Path) -> None:
+    for trace in loop_traces():
+        _dump(root / "vectors" / "loop" / (trace["name"] + ".json"), trace)
+
+
 def write_keys(root: Path) -> None:
     """The public JWKS of the test key; the private JWK never leaves conformance/ (D89)."""
     _dump(root / "vectors" / "keys" / "jwks.json", jws.jwks())
@@ -395,13 +411,26 @@ carried by one client token.
   simulator does the reverse. In every transcript, `ping` `p1` follows `ready` at once and every ping
   has one pong; every `say` is bracketed by one `audio_state` started and one ended; the server never
   leaves more than 1200 ms without a cue while the phase is framing, action or listening; FRAMING keeps
-  its 15 s cap; probes are summarised at rung 0 and pts 0.
+  its 15 s cap; probes are summarised at rung 0 and pts 0; the client sends nothing after its `bye`.
 - A transcript whose `meta.expect.media` is `continuous` (`framing-timeout.jsonl`) carries every video
   and audio message from `config` to `end`, with server pings every 1 s, `stats` every 500 ms and
   `attest` every 1000 ms of video pts. Its `attest` chains are computed over the summarised messages
   with zero-filled payloads (the 8-byte header the summary names, then `bytes - 8` zero bytes), so a
   simulator that sends such payloads replays it unmodified. Elsewhere media is sampled and `attest`
   chains are placeholders.
+- In `floor-breached.jsonl` the client's control loop ticks every 200 ms from `probe_result`: its step
+  down to rung 4 and its `bye` `floor_breached` fall on those ticks, the `bye` on the 15th tick after
+  the step, since the step's own tick does not count and a tick skipped for a keyframe request holds
+  the count (spec 05 5.6 step 6, D130).
+- `loop/*.json` are control-loop traces of spec 05 5.6: a profile, the ladder and a start rung, then the
+  inputs of the client's loop, which starts at t_ms 0 and ticks every 200 ms from t_ms 200: each tick's
+  `queued_bytes`, `drained_bytes_1s` and `encoded_kbps_2s`, and the server's `ping` samples, `set_rung`
+  messages, keyframe requests and the IDRs the encoder sends, each at a t_ms of its own. `expect` is
+  what the reference loop of `conformance/` yields from them as D33, D130 and D132 read 5.6: every rung
+  the client announces in a `rung` message with its reason, every change of decimation, and
+  `floor_tick`, the tick that sends `bye` `floor_breached` and ends the trace, or null. An SDK feeds
+  the inputs to its loop in t_ms order and compares. No tick's queue_ms is within 1 ms of 150, 600 or
+  1500, so whole-millisecond arithmetic agrees.
 - `streams/` is a placeholder until phase 0 delivers real device captures.
 """
 
@@ -412,6 +441,7 @@ def generate(root: Path) -> None:
     write_framing_vectors(root)
     write_chain_vectors(root)
     write_transcripts(root)
+    write_loop_traces(root)
     write_keys(root)
     (root / "vectors" / "streams").mkdir(parents=True, exist_ok=True)
     (root / "vectors" / "streams" / "README.md").write_text(
