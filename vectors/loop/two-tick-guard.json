@@ -1,0 +1,162 @@
+{
+  "name": "two-tick-guard",
+  "description": "Step 3's two-tick rule and the guards of D33: queue_ms above 600 on two ticks steps down one rung, at t_ms 400; for 1 s after a downshift no further one comes while the count runs on, so the next is at 1400. queue_ms rises above 1500 at 1600, and the emergency rule waits only 600 ms after the downshift: at 2000 it steps down two rungs, to rung 4.",
+  "profile": "webcodecs",
+  "ladder": [
+    {
+      "rung": 0,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 900,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 1,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 600,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 2,
+      "w": 480,
+      "h": 640,
+      "fps": 15,
+      "video_kbps": 400,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 3,
+      "w": 336,
+      "h": 448,
+      "fps": 12,
+      "video_kbps": 250,
+      "audio_kbps": 16
+    },
+    {
+      "rung": 4,
+      "w": 288,
+      "h": 384,
+      "fps": 10,
+      "video_kbps": 150,
+      "audio_kbps": 12
+    }
+  ],
+  "start_rung": 0,
+  "ticks": [
+    {
+      "t_ms": 200,
+      "queued_bytes": 70000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 924
+    },
+    {
+      "t_ms": 400,
+      "queued_bytes": 70000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 924
+    },
+    {
+      "t_ms": 600,
+      "queued_bytes": 70000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 624
+    },
+    {
+      "t_ms": 800,
+      "queued_bytes": 70000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 624
+    },
+    {
+      "t_ms": 1000,
+      "queued_bytes": 70000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 624
+    },
+    {
+      "t_ms": 1200,
+      "queued_bytes": 70000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 624
+    },
+    {
+      "t_ms": 1400,
+      "queued_bytes": 70000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 624
+    },
+    {
+      "t_ms": 1600,
+      "queued_bytes": 160000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 1800,
+      "queued_bytes": 160000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2000,
+      "queued_bytes": 160000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 2200,
+      "queued_bytes": 30000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 2400,
+      "queued_bytes": 30000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 2600,
+      "queued_bytes": 30000,
+      "drained_bytes_1s": 100000,
+      "encoded_kbps_2s": 162
+    }
+  ],
+  "pings": [],
+  "set_rung": [],
+  "keyframe_requests": [],
+  "idrs": [],
+  "expect": {
+    "rungs": [
+      {
+        "t_ms": 400,
+        "rung": 1,
+        "reason": "backpressure"
+      },
+      {
+        "t_ms": 1400,
+        "rung": 2,
+        "reason": "backpressure"
+      },
+      {
+        "t_ms": 2000,
+        "rung": 4,
+        "reason": "backpressure"
+      }
+    ],
+    "decimation": [
+      {
+        "t_ms": 400,
+        "decimation": 1
+      },
+      {
+        "t_ms": 2000,
+        "decimation": 2
+      }
+    ],
+    "floor_tick": null
+  }
+}

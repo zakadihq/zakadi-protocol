@@ -1,0 +1,172 @@
+{
+  "name": "floor-webcodecs",
+  "description": "Step 6 on webcodecs (D130): the emergency rule steps down to rung 4 at t_ms 400, and queue_ms stays above 1500 on every later tick. The step's own tick measured rung 2's backlog and does not count; the 15th tick after it, at 3400, breaches the floor.",
+  "profile": "webcodecs",
+  "ladder": [
+    {
+      "rung": 0,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 900,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 1,
+      "w": 480,
+      "h": 640,
+      "fps": 20,
+      "video_kbps": 600,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 2,
+      "w": 480,
+      "h": 640,
+      "fps": 15,
+      "video_kbps": 400,
+      "audio_kbps": 24
+    },
+    {
+      "rung": 3,
+      "w": 336,
+      "h": 448,
+      "fps": 12,
+      "video_kbps": 250,
+      "audio_kbps": 16
+    },
+    {
+      "rung": 4,
+      "w": 288,
+      "h": 384,
+      "fps": 10,
+      "video_kbps": 150,
+      "audio_kbps": 12
+    }
+  ],
+  "start_rung": 2,
+  "ticks": [
+    {
+      "t_ms": 200,
+      "queued_bytes": 17500,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 400,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 25000,
+      "encoded_kbps_2s": 424
+    },
+    {
+      "t_ms": 600,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 800,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 1000,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 1200,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 1400,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 1600,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 1800,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 2000,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 2200,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 2400,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 2600,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 2800,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 3000,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 3200,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    },
+    {
+      "t_ms": 3400,
+      "queued_bytes": 40000,
+      "drained_bytes_1s": 20000,
+      "encoded_kbps_2s": 162
+    }
+  ],
+  "pings": [],
+  "set_rung": [],
+  "keyframe_requests": [],
+  "idrs": [],
+  "expect": {
+    "rungs": [
+      {
+        "t_ms": 400,
+        "rung": 4,
+        "reason": "backpressure"
+      }
+    ],
+    "decimation": [
+      {
+        "t_ms": 400,
+        "decimation": 2
+      }
+    ],
+    "floor_tick": 3400
+  }
+}

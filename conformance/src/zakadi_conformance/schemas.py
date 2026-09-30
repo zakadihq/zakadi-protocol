@@ -1039,6 +1039,102 @@ def chain_vector_schema() -> dict:
     }
 
 
+def loop_trace_schema() -> dict:
+    def entries(properties: dict, description: str) -> dict:
+        return {
+            "type": "array",
+            "description": description,
+            "items": obj(
+                {"t_ms": ref("ms")} | properties,
+                ["t_ms"] + list(properties),
+                additionalProperties=False,
+            ),
+        }
+
+    ladder_rung = integer(0, 4)
+    return {
+        "$schema": DRAFT,
+        "$id": SCHEMA_BASE + "loop-trace.schema.json",
+        "title": "A vectors/loop/*.json control-loop trace",
+        "description": "The inputs of the client control loop of spec 05 5.6, which starts at t_ms 0 at "
+        "start_rung and ticks every 200 ms from t_ms 200, each input at a t_ms of its own, and what the "
+        "reference loop yields from them (spec 01 1.12, D95, D130, D132).",
+        "type": "object",
+        "properties": {
+            "name": string(),
+            "description": string(),
+            "profile": ref("profile"),
+            "ladder": {
+                "type": "array",
+                "items": ref("ladderEntry"),
+                "minItems": 5,
+                "maxItems": 5,
+            },
+            "start_rung": ladder_rung,
+            "ticks": entries(
+                {
+                    "queued_bytes": integer(
+                        0, None, "Platform queue bytes (5.6 step 1)"
+                    ),
+                    "drained_bytes_1s": integer(
+                        0, None, "Bytes acknowledged as sent in the last 1 s"
+                    ),
+                    "encoded_kbps_2s": number(
+                        0,
+                        None,
+                        "Media kbps encoded over the last 2 s, as stats.encoded_kbps",
+                    ),
+                },
+                "One per tick, every 200 ms from t_ms 200",
+            )
+            | {"minItems": 1},
+            "pings": entries(
+                {
+                    "rtt_ms": {"oneOf": [{"type": "null"}, integer(0)]},
+                    "rx_kbps": {"oneOf": [{"type": "null"}, number(0)]},
+                },
+                "Server ping samples",
+            ),
+            "set_rung": entries({"rung": ladder_rung}, "Server set_rung messages"),
+            "keyframe_requests": entries({}, "Server keyframe messages"),
+            "idrs": entries({}, "IDRs the encoder sends"),
+            "expect": obj(
+                {
+                    "rungs": entries(
+                        {
+                            "rung": ladder_rung,
+                            "reason": enum(["backpressure", "headroom", "server"]),
+                        },
+                        "Every rung the client announces in a rung message",
+                    ),
+                    "decimation": entries(
+                        {"decimation": integer(0, 2)}, "Every change of decimation"
+                    ),
+                    "floor_tick": {
+                        "oneOf": [{"type": "null"}, ref("ms")],
+                        "description": "The tick that sends bye floor_breached, or null",
+                    },
+                },
+                ["rungs", "decimation", "floor_tick"],
+                additionalProperties=False,
+            ),
+        },
+        "required": [
+            "name",
+            "profile",
+            "ladder",
+            "start_rung",
+            "ticks",
+            "pings",
+            "set_rung",
+            "keyframe_requests",
+            "idrs",
+            "expect",
+        ],
+        "additionalProperties": False,
+    }
+
+
 def all_schemas() -> dict[str, dict]:
     """Returns {relative path under schemas/v1: schema}."""
     out: dict[str, dict] = {"common.schema.json": common_schema()}
@@ -1051,4 +1147,5 @@ def all_schemas() -> dict[str, dict]:
     out["transcript-line.schema.json"] = transcript_schema()
     out["framing-vector.schema.json"] = framing_vector_schema()
     out["chain-vector.schema.json"] = chain_vector_schema()
+    out["loop-trace.schema.json"] = loop_trace_schema()
     return out
