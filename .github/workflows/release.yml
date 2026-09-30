@@ -82,6 +82,7 @@ jobs:
           persist-credentials: false
       - uses: astral-sh/setup-uv@v7
         with:
+          version: "0.11.32"
           enable-cache: false
       - name: Vectors are deterministic and up to date
         run: |
