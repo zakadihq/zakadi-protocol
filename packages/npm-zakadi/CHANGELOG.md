@@ -6,6 +6,12 @@ All notable changes to `zakadi` are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-02
+
+### Changed
+
+- Released in lockstep with `@zakadi/protocol` 0.2.1 (the control-loop traces and the retimed `floor-breached.jsonl`); nothing in this package changed.
+
 ## [0.2.0] - 2026-09-26
 
 ### Changed
@@ -27,6 +33,7 @@ All notable changes to `zakadi` are documented here. The format follows
   with cues and redial availability, `end` reason mapping, WebSocket close codes and
   challenge kinds from the Zakadi protocol specification.
 
-[Unreleased]: https://github.com/zakadihq/zakadi-protocol/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/zakadihq/zakadi-protocol/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/zakadihq/zakadi-protocol/releases/tag/v0.2.1
 [0.2.0]: https://github.com/zakadihq/zakadi-protocol/releases/tag/v0.2.0
 [0.1.0]: https://github.com/zakadihq/zakadi-protocol/releases/tag/v0.1.0

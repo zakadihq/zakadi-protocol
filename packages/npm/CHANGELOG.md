@@ -6,6 +6,8 @@ All notable changes to `@zakadi/protocol` are documented here. The format follow
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-02
+
 ### Added
 
 - `vectors/loop/*.json`, ten control-loop traces of the client's 200 ms loop, and
@@ -73,6 +75,7 @@ All notable changes to `@zakadi/protocol` are documented here. The format follow
   with cues and redial availability, `end` reason mapping, WebSocket close codes and
   challenge kinds from the Zakadi protocol specification.
 
-[Unreleased]: https://github.com/zakadihq/zakadi-protocol/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/zakadihq/zakadi-protocol/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/zakadihq/zakadi-protocol/releases/tag/v0.2.1
 [0.2.0]: https://github.com/zakadihq/zakadi-protocol/releases/tag/v0.2.0
 [0.1.0]: https://github.com/zakadihq/zakadi-protocol/releases/tag/v0.1.0
